@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "api-beaver"
+    }
+  },
+  "defaultProject": "api-beaver",
+  "cli": {
+    "analytics": "567b8e19-094a-4055-988f-13a941528e52"
+  }
 }
