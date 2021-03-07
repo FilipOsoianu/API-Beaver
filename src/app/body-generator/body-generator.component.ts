@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnChanges, OnInit} from '@angular/core';
+import {TypeEnum} from '../../enums/type.enum';
+import {RequiredEnum} from '../../enums/required.enum';
 
 @Component({
   selector: 'app-body-generator',
@@ -7,9 +9,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BodyGeneratorComponent implements OnInit {
 
-  constructor() { }
+  required: boolean;
+  type: object;
 
-  ngOnInit(): void {
+  typeEnum = TypeEnum;
+  requiredEnum = RequiredEnum;
+
+  constructor() {
   }
 
+  ngOnInit() {
+  }
+
+
+
+  selectType(event) {
+    console.log(event);
+  }
+
+
+  selectRequired(event) {
+    console.log(event);
+  }
 }

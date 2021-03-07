@@ -5,8 +5,10 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ComponentsPanelModule} from './components-panel/components-panel.module';
 import {BodyGeneratorModule} from './body-generator/body-generator.module';
-import {NbLayoutModule, NbMenuModule, NbThemeModule} from '@nebular/theme';
+import {NbLayoutModule, NbMenuModule, NbMenuService, NbThemeModule} from '@nebular/theme';
 import {NbEvaIconsModule} from '@nebular/eva-icons';
+import {NbMenuInternalService} from '@nebular/theme/components/menu/menu.service';
+import {EnumToArrayPipe} from '../pipes/enum-to-array.pipe';
 
 @NgModule({
   declarations: [
@@ -16,11 +18,12 @@ import {NbEvaIconsModule} from '@nebular/eva-icons';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    NbThemeModule.forRoot({ name: 'default' }),
+    NbThemeModule.forRoot({name: 'default'}),
+    NbMenuModule.forRoot(),
     NbLayoutModule,
     NbEvaIconsModule,
     ComponentsPanelModule,
-    BodyGeneratorModule
+    BodyGeneratorModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

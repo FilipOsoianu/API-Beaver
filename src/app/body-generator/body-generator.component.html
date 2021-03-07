@@ -1,19 +1,25 @@
-<nb-card status="success">
-  <nb-card-header>Nebula</nb-card-header>
-  <nb-card-body>
-    A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases.
-    Originally, nebula was a name for any diffuse astronomical object,
-    including galaxies beyond the Milky Way.
+<nb-card accent="info" class="body-generator-card">
+  <nb-card-body class="example-items-rows">
+    <input type="text" nbInput placeholder="Path name">
   </nb-card-body>
-  <nb-card-footer>By Wikipedia</nb-card-footer>
+  <nb-card-footer>
+    <nb-select placeholder="Select Type" [(ngModel)]="type" (ngModelChange)="selectType($event)">
+      <nb-option *ngFor="let item of typeEnum | enumToArray" [value]="item">
+        {{item}}
+      </nb-option>
+    </nb-select>
+  </nb-card-footer>
+  <nb-card-footer>
+    <nb-select placeholder="Required" [(ngModel)]="required" (ngModelChange)="selectRequired($event)">
+      <nb-option *ngFor="let item of requiredEnum | enumToArray" [value]="item">
+        {{item}}
+      </nb-option>
+    </nb-select>
+
+  </nb-card-footer>
+  <nb-card-footer>
+    <input type="text" nbInput placeholder="Example">
+  </nb-card-footer>
+
 </nb-card>
 
-<nb-card status="danger">
-  <nb-card-header>Nebula</nb-card-header>
-  <nb-card-body>
-    A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases.
-    Originally, nebula was a name for any diffuse astronomical object,
-    including galaxies beyond the Milky Way.
-  </nb-card-body>
-  <nb-card-footer>By Wikipedia</nb-card-footer>
-</nb-card>
