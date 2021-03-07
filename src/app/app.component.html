@@ -1,3 +1,15 @@
-<!--<app-components-panel></app-components-panel>-->
+<nb-layout>
 
-<app-body-generator></app-body-generator>
+  <nb-layout-header fixed>
+    <h2>API BEAVER</h2>
+  </nb-layout-header>
+
+  <nb-layout-column>
+    <router-outlet></router-outlet>
+  </nb-layout-column>
+
+  <nb-layout-footer fixed>
+    This is the footer for API BEAVER
+  </nb-layout-footer>
+
+</nb-layout>

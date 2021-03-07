@@ -1,3 +1,4 @@
+@import '../../themes';
 .component-panel {
   position: absolute;
   background: white;
@@ -8,7 +9,8 @@
   padding-bottom: 20px;
 }
 
-.elements-grid{
+
+.elements-grid {
   display: grid;
   grid-gap: 10px 10px;
   grid-template-columns: repeat(2, 120px);

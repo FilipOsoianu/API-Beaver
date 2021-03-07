@@ -9,7 +9,6 @@ export class AppComponent implements AfterViewInit {
   constructor(private elementRef: ElementRef) {
 
   }
-
   title = 'api-beaver';
 
   ngAfterViewInit() {
