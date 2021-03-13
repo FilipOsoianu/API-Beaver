@@ -1,25 +1,12 @@
-<nb-card accent="info" class="body-generator-card">
-  <nb-card-body class="example-items-rows">
-    <input type="text" nbInput placeholder="Path name">
-  </nb-card-body>
-  <nb-card-footer>
-    <nb-select placeholder="Select Type" [(ngModel)]="type" (ngModelChange)="selectType($event)">
-      <nb-option *ngFor="let item of typeEnum | enumToArray" [value]="item">
-        {{item}}
-      </nb-option>
-    </nb-select>
-  </nb-card-footer>
-  <nb-card-footer>
-    <nb-select placeholder="Required" [(ngModel)]="required" (ngModelChange)="selectRequired($event)">
-      <nb-option *ngFor="let item of requiredEnum | enumToArray" [value]="item">
-        {{item}}
-      </nb-option>
-    </nb-select>
+<nb-card-body class="example-items-rows">
+  <input type="text" nbInput placeholder="Type name">
+</nb-card-body>
 
-  </nb-card-footer>
-  <nb-card-footer>
-    <input type="text" nbInput placeholder="Example">
-  </nb-card-footer>
+<div *ngFor="let property of properties">
+  <app-object-type [property]="property" (propertyChange)="updateProperty($event)"
+                   (propertyDelete)="deletePropriety($event)">
+  </app-object-type>
+</div>
 
-</nb-card>
+<button nbButton status="basic" (click)="generateNewProperty()">New Property</button>
 

@@ -9,9 +9,9 @@ export class AppComponent implements AfterViewInit {
   constructor(private elementRef: ElementRef) {
 
   }
+
   title = 'api-beaver';
 
   ngAfterViewInit() {
-    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = '#f2f2f2';
   }
 }
