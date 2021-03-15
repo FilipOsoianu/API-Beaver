@@ -1,40 +1,44 @@
-<span class="inline">
+<div *ngFor="let propertyModel of property.properties">
+  <span class="inline">
+    <nb-card accent="info" class="body-generator-card">
 
-<nb-card accent="info" class="body-generator-card">
+      <input type="text" nbInput fullWidth placeholder="Field name" [(ngModel)]="propertyModel.name"
+             (change)="updateProperty()">
+      <span *ngIf="propertyModel.name">
 
-  <input type="text" nbInput fullWidth placeholder="Field name" [(ngModel)]="property.name"
-         (change)="updateProperty()">
-  <span *ngIf="property.name">
-  <nb-select placeholder="Select Type" [(ngModel)]="property.type" (ngModelChange)="generateNewProperty(property)">
-    <nb-option *ngFor="let item of typeEnum | enumToArray" [value]="item">
-      {{item}}
-    </nb-option>
-  </nb-select>
+        <nb-select placeholder="Select Type" [(ngModel)]="propertyModel.type"
+                   (ngModelChange)="generateNewProperty(propertyModel)">
+          <nb-option *ngFor="let item of typeEnum | enumToArray" [value]="item">
+            {{item}}
+          </nb-option>
+        </nb-select>
 
-  <nb-select placeholder="Required" [(ngModel)]="property.required">
-    <nb-option *ngFor="let item of requiredEnum | enumToArray" [value]="item"
-               (selectionChange)="updateProperty()">
-      {{item}}
-    </nb-option>
-  </nb-select>
-        <span *ngIf=" property.type === getType.object">
-          <div *ngFor="let propert of property.properties">
-            <app-object-type [property]="propert" (propertyChange)="updateProperty()"  (propertyDelete)="deletePropriety($event)" ></app-object-type>
-          </div>
-              <button nbButton status="basic" (click)="addProperty()">New Property</button>
-    </span>
-  <span *ngIf=" property.type !== getType.object">
-    <input type="text" nbInput placeholder="Example" [(ngModel)]="property.example"
-           (change)="updateProperty()">
-    </span>
+        <nb-select placeholder="Required">
+          <nb-option *ngFor="let item of requiredEnum | enumToArray" [value]="item"
+                     (selectionChange)="setRequired(item)">
+            {{item}}
+          </nb-option>
+        </nb-select>
+
+        <span *ngIf="propertyModel.properties !== undefined && propertyModel.properties.length > 0">
+            <app-object-type [property]="propertyModel" (propertyChange)="updateProperty()"></app-object-type>
+        </span>
+
+        <span *ngIf=" propertyModel.type !== getType.object && propertyModel.type !== undefined">
+          <input type="text" nbInput placeholder="Example" [(ngModel)]="propertyModel.example"
+                 (change)="updateProperty()">
+        </span>
+
+      </span>
+    </nb-card>
   </span>
-</nb-card>
-    </span>
+  <span class="inline">
+    <button nbButton ghost status="danger">
+      <nb-icon icon="trash" (click)="deleteProprietyEmit(propertyModel)"></nb-icon>
+    </button>
+  </span>
+</div>
 
-<span class="inline">
+<button nbButton status="basic" (click)="addProperty(property)">New Property</button>
 
-  <button nbButton ghost status="danger">
-    <nb-icon icon="trash" (click)="deleteProprietyEmit()"></nb-icon>
-  </button>
 
-</span>

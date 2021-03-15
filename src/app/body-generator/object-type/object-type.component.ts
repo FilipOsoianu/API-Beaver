@@ -10,15 +10,15 @@ import {PropertiesModel} from '../../../models/properties.model';
 })
 export class ObjectTypeComponent implements OnInit {
 
+
+  @Input() property: PropertiesModel;
+  @Output() propertyChange = new EventEmitter<PropertiesModel>();
+
   constructor() {
   }
 
   typeEnum = TypeEnum;
   requiredEnum = RequiredEnum;
-
-  @Input() property: PropertiesModel;
-  @Output() propertyChange = new EventEmitter<PropertiesModel>();
-  @Output() propertyDelete = new EventEmitter<PropertiesModel>();
 
   public get getType(): typeof TypeEnum {
     return TypeEnum;
@@ -29,29 +29,27 @@ export class ObjectTypeComponent implements OnInit {
 
   generateNewProperty(property: PropertiesModel) {
     if (property.type === TypeEnum.object) {
-      this.property.properties = [];
-      this.property.properties.push(new PropertiesModel());
-    } else {
-      this.property.properties = null;
-      this.propertyChange.emit(this.property);
+      property.properties = [];
+      property.properties.push(new PropertiesModel());
     }
+    this.propertyChange.emit(property);
   }
 
-  addProperty() {
-    this.property.properties.push(new PropertiesModel());
-    this.propertyChange.emit(this.property);
+  addProperty(property: PropertiesModel) {
+    property.properties.push(new PropertiesModel());
+    this.propertyChange.emit(property);
   }
 
-  deleteProprietyEmit() {
-    this.propertyDelete.emit(this.property);
-  }
-
-  deletePropriety(property: PropertiesModel) {
+  deleteProprietyEmit(property) {
     const index = this.property.properties.indexOf(property, 0);
     if (index > -1) {
       this.property.properties.splice(index, 1);
     }
     this.updateProperty();
+  }
+
+  setRequired(required: RequiredEnum): void {
+    this.property.required = required !== RequiredEnum.false;
   }
 
   updateProperty(): void {

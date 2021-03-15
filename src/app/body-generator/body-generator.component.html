@@ -1,12 +1,10 @@
 <nb-card-body class="example-items-rows">
-  <input type="text" nbInput placeholder="Type name">
+  <input type="text" nbInput placeholder="Type name" [(ngModel)]="object.name">
 </nb-card-body>
 
-<div *ngFor="let property of properties">
-  <app-object-type [property]="property" (propertyChange)="updateProperty($event)"
-                   (propertyDelete)="deletePropriety($event)">
-  </app-object-type>
-</div>
+<app-object-type [property]="object" (propertyChange)="updateProperty()">
+</app-object-type>
 
-<button nbButton status="basic" (click)="generateNewProperty()">New Property</button>
+<button nbButton status="basic" (click)="save()">Save</button>
+
 

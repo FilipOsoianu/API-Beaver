@@ -1,5 +1,8 @@
-import {Component, OnChanges, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PropertiesModel} from '../../models/properties.model';
+
+import {parse, stringify} from 'yaml';
+import {TypeEnum} from '../../enums/type.enum';
 
 @Component({
   selector: 'app-body-generator',
@@ -7,33 +10,34 @@ import {PropertiesModel} from '../../models/properties.model';
   styleUrls: ['./body-generator.component.scss']
 })
 export class BodyGeneratorComponent implements OnInit {
+  // objectTypeModel: ObjectTypeModel;
 
-  properties: PropertiesModel[] = [];
+  object: PropertiesModel;
 
   constructor() {
+    this.object = new PropertiesModel(TypeEnum.object);
+    this.object.properties.push(new PropertiesModel());
+    // this.objectTypeModel.properties = [];
   }
 
   ngOnInit() {
-    this.properties.push(new PropertiesModel());
-    console.log(this.properties);
-  }
-
-  generateNewProperty() {
-    this.properties.push(new PropertiesModel());
-  }
-
-  updateProperty(property: PropertiesModel): void {
-    // const index = this.properties.indexOf(this.properties.find((value => value.name === property.name)));
-    // this.properties[index] = property;
-    console.log(this.properties);
   }
 
 
-  deletePropriety(property: PropertiesModel) {
-    const index = this.properties.indexOf(property, 0);
-    if (index > -1) {
-      this.properties.splice(index, 1);
-    }
+
+  updateProperty(): void {
+
+  }
+
+
+
+
+  save() {
+    // const file = new File([stringify(parse(JSON.stringify(this.objectTypeModel)))], 'jora.raml');
+    // saveAs(file, 'hello world.raml');
+    console.log(stringify(parse(JSON.stringify(this.object.toJSON()))));
+    console.log(JSON.stringify(this.object.toExample()));
+    // this.bodyGeneratorService.saveObject(this.objectTypeModel);
   }
 
 }

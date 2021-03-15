@@ -6,7 +6,8 @@ import {CommonModule} from '@angular/common';
 import {TypeEnum} from '../../enums/type.enum';
 import {FormsModule} from '@angular/forms';
 import {ComponentsPanelModule} from '../components-panel/components-panel.module';
-import {ObjectTypeComponent} from './object-type/object-type.component'; // we also need angular router for Nebular to function properly
+import {ObjectTypeComponent} from './object-type/object-type.component';
+import {HttpClientModule} from '@angular/common/http'; // we also need angular router for Nebular to function properly
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import {ObjectTypeComponent} from './object-type/object-type.component'; // we a
     FormsModule,
     ComponentsPanelModule,
     NbIconModule,
+    HttpClientModule
   ],
   providers: [],
   exports: [
