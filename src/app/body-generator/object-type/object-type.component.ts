@@ -31,6 +31,8 @@ export class ObjectTypeComponent implements OnInit {
     if (property.type === TypeEnum.object) {
       property.properties = [];
       property.properties.push(new PropertiesModel());
+    } else {
+      property.properties = [];
     }
     this.propertyChange.emit(property);
   }

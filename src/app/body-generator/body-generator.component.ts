@@ -3,6 +3,8 @@ import {PropertiesModel} from '../../models/properties.model';
 
 import {parse, stringify} from 'yaml';
 import {TypeEnum} from '../../enums/type.enum';
+import {saveAs} from 'file-saver';
+import {BodyGeneratorService} from './body-generator.service';
 
 @Component({
   selector: 'app-body-generator',
@@ -10,34 +12,41 @@ import {TypeEnum} from '../../enums/type.enum';
   styleUrls: ['./body-generator.component.scss']
 })
 export class BodyGeneratorComponent implements OnInit {
-  // objectTypeModel: ObjectTypeModel;
 
   object: PropertiesModel;
 
-  constructor() {
+  constructor(private bodyGeneratorService: BodyGeneratorService) {
     this.object = new PropertiesModel(TypeEnum.object);
     this.object.properties.push(new PropertiesModel());
-    // this.objectTypeModel.properties = [];
   }
 
   ngOnInit() {
-  }
+    this.bodyGeneratorService.myData.subscribe((value: PropertiesModel) => {
+      if (value !== null) {
+        // console.log(value);
+        // console.log('dadada');
+        // value.toExample();
+        const file = new File([stringify(parse(JSON.stringify(value.toJSON())))], value.name + '.raml');
+        saveAs(file, value.name + '.raml');
+        // this.bodyGeneratorService.saveObject(file).subscribe(value1 => {
+        //   console.log(value1);
+        // });
+        // console.log('dada');
+        // console.log(value);.
 
+      }
+    });
+  }
 
 
   updateProperty(): void {
 
   }
 
-
-
-
   save() {
-    // const file = new File([stringify(parse(JSON.stringify(this.objectTypeModel)))], 'jora.raml');
-    // saveAs(file, 'hello world.raml');
-    console.log(stringify(parse(JSON.stringify(this.object.toJSON()))));
-    console.log(JSON.stringify(this.object.toExample()));
-    // this.bodyGeneratorService.saveObject(this.objectTypeModel);
+    this.object.toRAMLObject(this.bodyGeneratorService);
+    // console.log(JSON.stringify(this.object.toExample()));
+    // console.log(this.object);
   }
 
 }
