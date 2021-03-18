@@ -25,9 +25,10 @@ export class BodyGeneratorComponent implements OnInit {
       if (value !== null) {
         // console.log(value);
         // console.log('dadada');
-        // value.toExample();
-        const file = new File([stringify(parse(JSON.stringify(value.toJSON())))], value.name + '.raml');
-        saveAs(file, value.name + '.raml');
+        console.log(JSON.stringify(value));
+        value.toExample();
+        // const file = new File([stringify(parse(JSON.stringify(value.toJSON())))], value.name + '.raml');
+        // saveAs(file, value.name + '.raml');
         // this.bodyGeneratorService.saveObject(file).subscribe(value1 => {
         //   console.log(value1);
         // });

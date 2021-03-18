@@ -122,16 +122,13 @@ export class PropertiesModel {
   toExample() {
     let obj = {};
     const object = {};
-
     if (this.properties !== null && this.properties !== undefined) {
-      this.properties.forEach(value => {
+      this.properties.forEach((value: PropertiesModel) => {
+        console.log(value);
         if (value.properties !== null && value.type === TypeEnum.object) {
           obj[this.name] = this.toExample();
         } else {
-          console.log(value);
-          console.log(value.example);
-          obj[value.name] = value.example
-          // console.log(obj);
+          obj[value.name] = value.example;
         }
       });
     }
