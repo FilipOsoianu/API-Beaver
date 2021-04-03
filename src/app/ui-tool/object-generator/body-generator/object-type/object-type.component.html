@@ -1,0 +1,55 @@
+<div *ngFor="let propertyModel of property.properties">
+    <nb-card [accent]="propertyModel.type === typeEnum.object ? 'info' :propertyModel.type === typeEnum.number? 'success':
+          propertyModel.type === typeEnum.string?'warning':propertyModel.type === typeEnum.array?'primary':'control'" class="body-generator-card">
+        <input nbInput placeholder="Field name" required appNameValidator (change)="updateProperty()" [(ngModel)]="propertyModel.name" #name="ngModel">
+
+        <div *ngIf="propertyModel.type === typeEnum.object">
+            <button nbButton status="basic" (click)="minimise = !minimise">Minimize</button>
+        </div>
+
+        <div *ngIf="propertyModel.name && name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+            <div *ngIf="name.errors.nameValidator">
+                invalid character in name
+            </div>
+        </div>
+
+        <div *ngIf="!propertyModel.name">
+            <nb-select placeholder="Select existing object" (click)="loadFileNames()">
+                <nb-option *ngFor="let item of filesName" [value]="item" (selectionChange)="loadFile(propertyModel,item)">
+                    {{item}}
+                </nb-option>
+            </nb-select>
+        </div>
+
+        <div *ngIf="propertyModel.name">
+
+            <nb-select placeholder="Select Type" [(ngModel)]="propertyModel.type" (ngModelChange)="generateNewProperty(propertyModel)">
+                <nb-option *ngFor="let item of typeEnum | enumToArray" [value]="item">
+                    {{item}}
+                </nb-option>
+            </nb-select>
+
+            <nb-select placeholder="Required">
+                <nb-option *ngFor="let item of requiredEnum | enumToArray" [value]="item" (selectionChange)="setRequired(item)">
+                    {{item}}
+                </nb-option>
+            </nb-select>
+
+            <div *ngIf="propertyModel.properties !== undefined && propertyModel.properties.length > 0">
+                <app-object-type [property]="propertyModel" (propertyChange)="updateProperty()"></app-object-type>
+            </div>
+
+        </div>
+
+        <div *ngIf=" propertyModel.type !== getType.object && propertyModel.type !== undefined">
+            <input type="text" nbInput placeholder="Example" [(ngModel)]="propertyModel.example" required [appExampleValidator]="propertyModel.type" #example="ngModel" (change)="updateProperty()">
+        </div>
+        <button nbButton ghost status="danger">
+            <nb-icon icon="trash" (click)="deleteProprietyEmit(propertyModel)"></nb-icon>
+          </button>
+
+    </nb-card>
+</div>
+
+
+<button nbButton status="basic" (click)="addProperty(property)">New Property</button>

@@ -1,0 +1,25 @@
+.grid {
+  display: grid;
+  grid-gap: 10px 10px;
+  grid-template-columns: repeat(2, 100px);
+  width: min-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container {
+  margin: 20px;
+  text-align: center;
+  display: inline-block;
+  padding: 0 20px 20px 20px;
+
+  width: min-content;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+* {
+  font-family: Raleway /* Replace with your custom font */, sans-serif !important;
+  font-weight: bold;
+}
+
+
