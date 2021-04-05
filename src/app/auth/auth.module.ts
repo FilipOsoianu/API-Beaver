@@ -1,18 +1,28 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {RouterModule} from '@angular/router';
 
-import { NgxAuthRoutingModule } from './auth-routing.module';
-import { NB_AUTH_TOKEN_INTERCEPTOR_FILTER, NbAuthJWTToken, NbAuthModule, NbPasswordAuthStrategy } from '@nebular/auth';
-import { NbAlertModule, NbButtonModule, NbCheckboxModule, NbInputModule } from '@nebular/theme';
-import { AuthGuard } from './auth-guard.service';
-import { NbRoleProvider, NbSecurityModule } from '@nebular/security';
-import { NbCustomRoleProvider } from './role.provider';
+import {NgxAuthRoutingModule} from './auth-routing.module';
+import {
+  NB_AUTH_TOKEN_INTERCEPTOR_FILTER,
+  NbAuthJWTToken,
+  NbAuthModule,
+  NbAuthToken,
+  NbPasswordAuthStrategy
+} from '@nebular/auth';
+import {NbAlertModule, NbButtonModule, NbCheckboxModule, NbInputModule} from '@nebular/theme';
+import {AuthGuard} from './auth-guard.service';
+import {NbRoleProvider, NbSecurityModule} from '@nebular/security';
+import {NbCustomRoleProvider} from './role.provider';
 
-import { HttpRequest } from '@angular/common/http';
-import { RoleGuard } from './role-guard.service';
-import { environment } from '../../environments/environment';
+import {HttpRequest} from '@angular/common/http';
+import {RoleGuard} from './role-guard.service';
+import {environment} from '../../environments/environment';
+import {LoginComponent} from "./login/login.component";
+import {RegisterComponent} from "./register/register.component";
+import {ThemeModule} from "../@theme/theme.module";
+import {ChangePasswordComponent} from "./change-password/change-password.component";
 
 export function filterInterceptorRequest(req: HttpRequest<any>) {
   return [].some(url => req.url.includes(url));
@@ -35,21 +45,41 @@ export function filterInterceptorRequest(req: HttpRequest<any>) {
           name: 'email',
           token: {
             class: NbAuthJWTToken,
-            key: 'token', // this parameter tells where to look for the token
+            key: 'access_token', // this parameter tells where to look for the token
           },
           baseEndpoint: environment.api_url,
           login: {
-            endpoint: '/api/auth/local',
+            endpoint: '/users/signin',
             method: 'post',
             redirect: {
-              success: '/pages/dashboard',
-              failure: '/',
+              success: '/',
+              failure: '/auth/login',
             },
-
             defaultErrors: ['Login/Email combination is not correct, please try again.'],
             defaultMessages: ['You have been successfully logged in.'],
           },
-          logout: { endpoint: '', redirect: { success: '/auth/login', failure: '/auth/login' } },
+          register: {
+            endpoint: '/users',
+            method: 'post',
+            redirect: {
+              success: '/',
+              failure: '/auth/register',
+            },
+            defaultErrors: ['Login/Email combination is not correct, please try again.'],
+            defaultMessages: ['You have been successfully registered.'],
+          },
+          requestPass:
+            {
+              endpoint: '/users',
+              method: 'patch',
+              redirect: {
+                success: '/',
+                failure: '/auth/changePassword',
+              },
+              defaultErrors: ['please try again.'],
+              defaultMessages: ['You have been successfully logged in.'],
+            },
+          logout: {endpoint: '', redirect: {success: '/auth/login', failure: '/auth/login'}},
         }),
       ],
       forms: {
@@ -77,9 +107,12 @@ export function filterInterceptorRequest(req: HttpRequest<any>) {
         },
       },
     }),
+    ThemeModule,
   ],
   declarations: [
-
+    LoginComponent,
+    RegisterComponent,
+    ChangePasswordComponent
   ],
   providers: [
     AuthGuard,
@@ -88,7 +121,8 @@ export function filterInterceptorRequest(req: HttpRequest<any>) {
       provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER,
       useValue: filterInterceptorRequest,
     },
-    { provide: NbRoleProvider, useClass: NbCustomRoleProvider },
+    {provide: NbRoleProvider, useClass: NbCustomRoleProvider},
   ],
 })
-export class NgxAuthModule {}
+export class NgxAuthModule {
+}
