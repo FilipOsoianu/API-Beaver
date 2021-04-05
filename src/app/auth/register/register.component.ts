@@ -10,15 +10,11 @@ export class RegisterComponent extends NbRegisterComponent {
   register() {
     this.service.register(this.strategy, this.user).subscribe((result: NbAuthResult) => {
       this.submitted = false;
-      console.log(this.user);
-      console.log(result);
-
       if (result.isSuccess()) {
-
+        this.messages = result.getMessages();
       } else {
         this.errors = result.getErrors();
       }
-      //
       const redirect = result.getRedirect();
       setTimeout(() => {
         return this.router.navigateByUrl(redirect);

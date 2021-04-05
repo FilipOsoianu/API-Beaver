@@ -9,6 +9,7 @@ export class PropertiesModel {
   example: string;
   loadFile: boolean;
   properties: PropertiesModel[];
+  specId: any;
 
   constructor(type?: TypeEnum | string, name?: string, required?: boolean,
               example?: string,
@@ -76,7 +77,7 @@ export class PropertiesModel {
           value.properties.forEach(property => {
             let tempProperty = this.fromJson(this.toString(property), bodyGeneratorService);
             if (tempProperty.loadFile) {
-              bodyGeneratorService.downloadObject(tempProperty.name + '.raml').subscribe(value1 => {
+              bodyGeneratorService.downloadObject(localStorage.getItem('user_id'), prop.specId, tempProperty.name + '.raml').subscribe(value1 => {
                 value1.text().then(value2 => {
                   tempProperty = PropertiesModel.fromJson(PropertiesModel.fromYaml(value2), bodyGeneratorService);
                   prop.properties.push(tempProperty);

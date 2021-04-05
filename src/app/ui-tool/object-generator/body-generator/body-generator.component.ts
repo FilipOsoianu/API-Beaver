@@ -14,9 +14,11 @@ import {TypeEnum} from "../enums/type.enum";
 export class BodyGeneratorComponent implements OnInit {
 
   object: PropertiesModel;
+  specId = 22;
 
   constructor(private bodyGeneratorService: BodyGeneratorService) {
     this.object = new PropertiesModel(TypeEnum.object);
+    this.object.specId = this.specId;
     this.object.properties.push(new PropertiesModel());
   }
 
@@ -25,12 +27,11 @@ export class BodyGeneratorComponent implements OnInit {
       if (value !== null) {
         const file = new File([stringify(parse(JSON.stringify(value.toJSON())))], value.name + '.raml');
         saveAs(file, value.name + '.raml');
-        this.bodyGeneratorService.saveObject(file).subscribe(value1 => {
+        this.bodyGeneratorService.saveObject(localStorage.getItem('user_id'), this.specId, file).subscribe(value1 => {
           console.log(value1);
         });
       }
     });
-
 
 
     this.bodyGeneratorService.newProperty.subscribe((value: PropertiesModel) => {

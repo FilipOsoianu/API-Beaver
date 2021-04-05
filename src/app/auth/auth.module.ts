@@ -14,10 +14,8 @@ import {
 import {NbAlertModule, NbButtonModule, NbCheckboxModule, NbInputModule} from '@nebular/theme';
 import {AuthGuard} from './auth-guard.service';
 import {NbRoleProvider, NbSecurityModule} from '@nebular/security';
-import {NbCustomRoleProvider} from './role.provider';
 
 import {HttpRequest} from '@angular/common/http';
-import {RoleGuard} from './role-guard.service';
 import {environment} from '../../environments/environment';
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
@@ -25,6 +23,7 @@ import {ThemeModule} from "../@theme/theme.module";
 import {ChangePasswordComponent} from "./change-password/change-password.component";
 
 export function filterInterceptorRequest(req: HttpRequest<any>) {
+  console.log(req);
   return [].some(url => req.url.includes(url));
 }
 
@@ -62,9 +61,10 @@ export function filterInterceptorRequest(req: HttpRequest<any>) {
             endpoint: '/users',
             method: 'post',
             redirect: {
-              success: '/',
+              success: '/auth/login',
               failure: '/auth/register',
             },
+            requireValidToken: false,
             defaultErrors: ['Login/Email combination is not correct, please try again.'],
             defaultMessages: ['You have been successfully registered.'],
           },
@@ -84,10 +84,17 @@ export function filterInterceptorRequest(req: HttpRequest<any>) {
       ],
       forms: {
         login: {
-          redirectDelay: 0, // delayefore redirect after a successful login, while success message is shown to the user
+          redirectDelay: 500, // delayefore redirect after a successful login, while success message is shown to the user
           strategy: 'email', // strategy id key.
           showMessages: {
-            // show/not show success/error messages
+              success: true,
+            error: true,
+          },
+        },
+        register: {
+          redirectDelay: 1000, // delayefore redirect after a successful login, while success message is shown to the user
+          strategy: 'email', // strategy id key.
+          showMessages: {
             success: true,
             error: true,
           },
@@ -116,13 +123,8 @@ export function filterInterceptorRequest(req: HttpRequest<any>) {
   ],
   providers: [
     AuthGuard,
-    RoleGuard,
-    {
-      provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER,
-      useValue: filterInterceptorRequest,
-    },
-    {provide: NbRoleProvider, useClass: NbCustomRoleProvider},
   ],
 })
 export class NgxAuthModule {
 }
+

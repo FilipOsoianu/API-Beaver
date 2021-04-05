@@ -39,6 +39,17 @@ export class UiToolLayoutComponent implements OnInit {
         ],
       },
       {
+        title: 'Spec',
+        icon: 'settings-outline',
+        children: [
+          {
+            data: {id: 'Spec'},
+            title: 'Specs',
+            link: '/specs',
+          },
+        ],
+      },
+      {
         title: 'User',
         icon: 'person-outline',
         children: [

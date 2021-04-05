@@ -14,6 +14,7 @@ export class ObjectTypeComponent implements OnInit {
 
   @Input() property: PropertiesModel;
   @Output() propertyChange = new EventEmitter<PropertiesModel>();
+  @Input() specId: any;
 
   constructor(private bodyGeneratorService: BodyGeneratorService) {
   }
@@ -64,14 +65,16 @@ export class ObjectTypeComponent implements OnInit {
   }
 
   loadFileNames() {
-    this.bodyGeneratorService.loadFilesList().subscribe(value => {
+    console.log(localStorage.getItem('user_id'));
+
+    this.bodyGeneratorService.loadFilesList(localStorage.getItem('user_id'), this.specId).subscribe(value => {
       this.filesName = [];
       this.filesName = this.filesName.concat(value);
     });
   }
 
   loadFile(propertyModel: PropertiesModel, fileName: string) {
-    this.bodyGeneratorService.downloadObject(fileName).subscribe(value => {
+    this.bodyGeneratorService.downloadObject(localStorage.getItem('user_id'), this.specId, fileName).subscribe(value => {
       value.text().then(value1 => {
         const property = this.property.properties.findIndex((obj => obj.name === propertyModel.name));
         this.property.properties[property] = PropertiesModel.fromJson(PropertiesModel.fromYaml(value1), this.bodyGeneratorService);

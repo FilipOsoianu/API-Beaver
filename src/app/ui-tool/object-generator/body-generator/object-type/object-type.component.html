@@ -36,7 +36,7 @@
             </nb-select>
 
             <div *ngIf="propertyModel.properties !== undefined && propertyModel.properties.length > 0">
-                <app-object-type [property]="propertyModel" (propertyChange)="updateProperty()"></app-object-type>
+                <app-object-type [property]="propertyModel" (propertyChange)="updateProperty()" [specId]="specId"></app-object-type>
             </div>
 
         </div>

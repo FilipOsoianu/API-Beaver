@@ -10,22 +10,14 @@ export class LoginComponent extends NbLoginComponent {
 
 
   login(): void {
-    // this.user = new UserModel();
-
     this.errors = this.messages = [];
     this.submitted = true;
 
     this.service.authenticate(this.strategy, this.user).subscribe((result: NbAuthResult) => {
       this.submitted = false;
-      console.log(this.user);
-      console.log(result);
 
       if (result.isSuccess()) {
-      //   if (result['token']['payload'].roles.includes('ADMIN')) {
-      //     this.messages = result.getMessages();
-      //   } else {
-      //     this.errors = ['You do not have access to the dashboard'];
-      //   }
+        this.messages = result.getMessages();
       } else {
         this.errors = result.getErrors();
       }
@@ -33,7 +25,6 @@ export class LoginComponent extends NbLoginComponent {
       setTimeout(() => {
         return this.router.navigateByUrl(redirect);
       }, this.redirectDelay);
-      // this.cd.detectChanges();
     });
   }
 

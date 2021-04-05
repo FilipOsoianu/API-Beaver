@@ -21,7 +21,6 @@ import {
   NbWindowModule,
 } from '@nebular/theme';
 import {NbAuthJWTInterceptor} from '@nebular/auth';
-
 @NgModule({
   declarations: [AppComponent],
   imports: [

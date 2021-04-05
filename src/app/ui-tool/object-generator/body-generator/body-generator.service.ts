@@ -3,12 +3,13 @@ import {Injectable, OnInit} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {PropertiesModel} from "../models/properties.model";
+import {NbAuthJWTToken, NbAuthService} from "@nebular/auth";
 
 @Injectable({
   providedIn: 'root'
 })
 export class BodyGeneratorService {
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private authService: NbAuthService) {
 
   }
 
@@ -26,23 +27,23 @@ export class BodyGeneratorService {
   }
 
 
-  saveObject(file: File): Observable<object> {
+  saveObject(userId: any, specId: any, file: File): Observable<object> {
 
     const formData = new FormData();
     formData.append('file', file);
 
-    return this.http.post<PropertiesModel>('http://172.16.1.83:8081/users/1/specs/2/files', formData);
+    return this.http.post<PropertiesModel>(`http://172.16.1.83:8081/users/${userId}/specs/${specId}/files`, formData);
   }
 
-  downloadObject(fileName: string, userId?: number, specId?: number): Observable<Blob> {
-    console.log(fileName);
-    return this.http.get('http://172.16.1.83:8081/users/1/specs/2/files/' + fileName, {responseType: 'blob'});
+  downloadObject(userId: any, specId: any, fileName: string): Observable<Blob> {
+
+    return this.http.get(`http://172.16.1.83:8081/users/${userId}/specs/${specId}/files` + fileName, {responseType: 'blob'});
   }
 
 
-  loadFilesList(userId?: number, specId?: number): Observable<string []> {
+  loadFilesList(userId:any, specId: any): Observable<string []> {
 
-    return this.http.get<string []>('http://172.16.1.83:8081/users/1/specs/2/files');
+    return this.http.get<string []>(`http://172.16.1.83:8081/users/${userId}/specs/${specId}/files`);
   }
 }
 
