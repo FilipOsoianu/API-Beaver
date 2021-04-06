@@ -5,6 +5,7 @@ import {NbAuthJWTToken, NbAuthService} from "@nebular/auth";
 import {NbDialogService} from "@nebular/theme";
 import {AddSpecComponent} from "../add-spec/add-spec.component";
 import {SpecModel} from "../models/spec.model";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'ngx-specs-list',
@@ -12,6 +13,7 @@ import {SpecModel} from "../models/spec.model";
   styleUrls: ['./specs-list.component.css']
 })
 export class SpecsListComponent implements OnInit {
+
 
   settings = {
     hideSubHeader: true,
@@ -41,7 +43,8 @@ export class SpecsListComponent implements OnInit {
   source: LocalDataSource;
   userId: any;
 
-  constructor(private specsService: SpecsService, private dialogService: NbDialogService) {
+  constructor(private specsService: SpecsService, private dialogService: NbDialogService, private router: Router,         private route: ActivatedRoute,
+  ) {
     this.userId = localStorage.getItem('user_id');
     this.source = new LocalDataSource();
 
@@ -55,6 +58,11 @@ export class SpecsListComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+  openSpec(event) {
+    this.router.navigate([event.data.id], {relativeTo: this.route});
+    console.log(event)
+  }
 
   addSpec(): void {
     this.dialogService.open(AddSpecComponent)

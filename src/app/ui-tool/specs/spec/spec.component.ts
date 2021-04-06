@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Params} from "@angular/router";
 
 @Component({
   selector: 'ngx-spec',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SpecComponent implements OnInit {
 
-  constructor() { }
+  constructor(private activatedRoute: ActivatedRoute) {
+    this.specID = this.activatedRoute.snapshot.paramMap.get('id');
+  }
+
+  specID: any;
 
   ngOnInit(): void {
   }

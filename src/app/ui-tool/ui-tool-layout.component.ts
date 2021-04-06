@@ -2,7 +2,7 @@ import {HttpClient} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
 import {NbDialogService, NbIconLibraries, NbMenuService} from '@nebular/theme';
 import {NbMenuItem} from '@nebular/theme/components/menu/menu.service';
-import {UserModel} from "./object-generator/models/user.model";
+import {UserModel} from "./profile/models/user.model";
 
 @Component({
   selector: 'ngx-dashboard-layout',

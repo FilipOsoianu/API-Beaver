@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 import {parse, stringify} from 'yaml';
 import {saveAs} from 'file-saver';
 import {BodyGeneratorService} from './body-generator.service';
-import {PropertiesModel} from "../models/properties.model";
-import {TypeEnum} from "../enums/type.enum";
+import {PropertiesModel} from "./models/properties.model";
+import {TypeEnum} from "./enums/type.enum";
 
 @Component({
   selector: 'app-body-generator',
@@ -14,7 +14,8 @@ import {TypeEnum} from "../enums/type.enum";
 export class BodyGeneratorComponent implements OnInit {
 
   object: PropertiesModel;
-  specId = 22;
+  @Input() specId: any;
+
 
   constructor(private bodyGeneratorService: BodyGeneratorService) {
     this.object = new PropertiesModel(TypeEnum.object);

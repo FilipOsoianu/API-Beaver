@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BodyGeneratorService} from '../body-generator.service';
-import {PropertiesModel} from "../../models/properties.model";
-import {TypeEnum} from "../../enums/type.enum";
-import {RequiredEnum} from "../../enums/required.enum";
+import {PropertiesModel} from "../models/properties.model";
+import {TypeEnum} from "../enums/type.enum";
+import {RequiredEnum} from "../enums/required.enum";
 
 @Component({
   selector: 'app-object-type',
@@ -65,8 +65,6 @@ export class ObjectTypeComponent implements OnInit {
   }
 
   loadFileNames() {
-    console.log(localStorage.getItem('user_id'));
-
     this.bodyGeneratorService.loadFilesList(localStorage.getItem('user_id'), this.specId).subscribe(value => {
       this.filesName = [];
       this.filesName = this.filesName.concat(value);

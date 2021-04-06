@@ -2,8 +2,9 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable, OnInit} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {PropertiesModel} from "../models/properties.model";
+import {PropertiesModel} from "./models/properties.model";
 import {NbAuthJWTToken, NbAuthService} from "@nebular/auth";
+import {environment} from "../../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -32,18 +33,18 @@ export class BodyGeneratorService {
     const formData = new FormData();
     formData.append('file', file);
 
-    return this.http.post<PropertiesModel>(`http://172.16.1.83:8081/users/${userId}/specs/${specId}/files`, formData);
+    return this.http.post<PropertiesModel>(environment.api_url + `/users/${userId}/specs/${specId}/files`, formData);
   }
 
   downloadObject(userId: any, specId: any, fileName: string): Observable<Blob> {
 
-    return this.http.get(`http://172.16.1.83:8081/users/${userId}/specs/${specId}/files` + fileName, {responseType: 'blob'});
+    return this.http.get(environment.api_url + `/users/${userId}/specs/${specId}/files` + fileName, {responseType: 'blob'});
   }
 
 
-  loadFilesList(userId:any, specId: any): Observable<string []> {
+  loadFilesList(userId: any, specId: any): Observable<string []> {
 
-    return this.http.get<string []>(`http://172.16.1.83:8081/users/${userId}/specs/${specId}/files`);
+    return this.http.get<string []>(environment.api_url + `/users/${userId}/specs/${specId}/files`);
   }
 }
 

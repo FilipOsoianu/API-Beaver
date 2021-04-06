@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {NbAuthResult, NbLoginComponent} from '@nebular/auth';
-import {UserModel} from "../../ui-tool/object-generator/models/user.model";
 
 @Component({
   selector: 'ngx-login',

@@ -1,17 +1,20 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import {SpecsComponent} from "./specs.component";
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {SpecComponent} from "./spec/spec.component";
+import {SpecsListComponent} from "./specs-list/specs-list.component";
 
 export const routes: Routes = [
   {
     path: '',
-    component: SpecsComponent,
-    children: [
-      {
-        path: '',
-        component: SpecsComponent,
-      },
-    ],
+    component: SpecsListComponent,
+  },
+  {
+    path: ':id',
+    component: SpecComponent,
+  },
+  {
+    path: ':id/objectGenerator',
+    loadChildren: () => import('./body-generator/body-generator.module').then(m => m.BodyGeneratorModule),
   },
 ];
 
@@ -19,4 +22,6 @@ export const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class SpecsRoutingModule {}
+export class SpecsRoutingModule {
+}
+

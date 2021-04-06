@@ -1,4 +1,4 @@
 <div class="add-button" style="text-align: end">
   <button nbButton status="primary" (click)="addSpec()">Create new Spec</button>
 </div>
-<ng2-smart-table [settings]="settings" [source]="source"></ng2-smart-table>
+<ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="openSpec($event)"></ng2-smart-table>

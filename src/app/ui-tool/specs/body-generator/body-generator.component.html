@@ -1,10 +1,8 @@
-
-
   <nb-card-body class="example-items-rows">
     <input type="text" nbInput placeholder="Type name" [(ngModel)]="object.name">
   </nb-card-body>
 
-  <app-object-type [property]="object" (propertyChange)="updateProperty($event)" [specId]="22">
+  <app-object-type [property]="object" (propertyChange)="updateProperty($event)" [specId]="specId">
   </app-object-type>
 
   <button nbButton status="basic" (click)="save()">Save</button>

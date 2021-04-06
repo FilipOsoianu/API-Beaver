@@ -1,9 +1,8 @@
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Injectable, OnInit} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {NbAuthJWTToken, NbAuthService} from "@nebular/auth";
+import {HttpClient,} from '@angular/common/http';
+import {Injectable,} from '@angular/core';
+import {Observable} from 'rxjs';
 import {SpecModel} from "./models/spec.model";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -15,25 +14,23 @@ export class SpecsService {
 
   createSpec(userId: any, spec: SpecModel): Observable<object> {
 
-    return this.http.post<SpecModel>(`http://172.16.1.83:8081/users/${userId}/specs`, spec);
+    return this.http.post<SpecModel>(environment.api_url + `/users/${userId}/specs`, spec);
   }
 
   getSpec(userId: any, specId: number): Observable<SpecModel> {
 
-    return this.http.get<SpecModel>(`http://172.16.1.83:8081/users/${userId}/specs${specId}`);
+    return this.http.get<SpecModel>(environment.api_url + `/users/${userId}/specs${specId}`);
   }
 
   getSpecs(userId: any): Observable<SpecModel[]> {
 
-    console.log(userId);
-
-    return this.http.get<SpecModel[]>(`http://172.16.1.83:8081/users/${userId}/specs`);
+    return this.http.get<SpecModel[]>(environment.api_url + `/users/${userId}/specs`);
   }
 
+  updateSpec(userId: any, specId: any, spec: SpecModel): Observable<SpecModel> {
 
-  getSpecFileNumber(userId: any, specId: number): Observable<string []> {
-
-    return this.http.get<string []>(`http://172.16.1.83:8081/users/${userId}/specs/${specId}/files`);
+    return this.http.put<SpecModel>(environment.api_url + `/users/${userId}/specs/${specId}`, spec);
   }
+
 }
 
