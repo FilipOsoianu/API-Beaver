@@ -1,6 +1,6 @@
 import {AbstractControl, NG_VALIDATORS, ValidationErrors, Validator, ValidatorFn} from '@angular/forms';
 import {Directive, Input} from '@angular/core';
-import {TypeEnum} from "../../specs/body-generator/enums/type.enum";
+import {TypeEnum} from "../enums/type.enum";
 
 export function exampleStringValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {

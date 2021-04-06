@@ -1,6 +1,6 @@
 import {TypeEnum} from '../enums/type.enum';
 import {parse} from 'yaml';
-import {BodyGeneratorService} from "../body-generator.service";
+import {BodyGeneratorService} from "../specs/body-generator/body-generator.service";
 
 export class PropertiesModel {
   name: string;

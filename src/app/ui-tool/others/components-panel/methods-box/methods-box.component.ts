@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MethodModel} from "../../models/method-model";
+import {MethodModel} from "../../../models/method-model";
 
 @Component({
   selector: 'app-methods-box',

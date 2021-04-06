@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {GenericBoxModel} from "../../models/generic-box-model";
+import {GenericBoxModel} from "../../../models/generic-box-model";
 
 @Component({
   selector: 'app-generic-box',

@@ -4,7 +4,7 @@ import {SpecsService} from "../specs.service";
 import {NbAuthJWTToken, NbAuthService} from "@nebular/auth";
 import {NbDialogService} from "@nebular/theme";
 import {AddSpecComponent} from "../add-spec/add-spec.component";
-import {SpecModel} from "../models/spec.model";
+import {SpecModel} from "../../models/spec.model";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({

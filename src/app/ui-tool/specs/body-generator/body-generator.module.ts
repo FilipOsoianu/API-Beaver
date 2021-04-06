@@ -6,9 +6,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ComponentsPanelModule} from '../../others/components-panel/components-panel.module';
 import {ObjectTypeComponent} from './object-type/object-type.component';
 import {HttpClientModule} from '@angular/common/http';
-import {NameDirective} from '../../others/shared/name.directive';
-import {ExampleDirective} from '../../others/shared/example.directive';
-import {EnumToArrayPipe} from "../../others/pipes/enum-to-array.pipe";
+import {NameDirective} from '../../shared/name.directive';
+import {ExampleDirective} from '../../shared/example.directive';
+import {EnumToArrayPipe} from "../../pipes/enum-to-array.pipe";
 import {BodyGeneratorRoutingModule} from "./body-generator-routing.module";
 import {ThemeModule} from "../../../@theme/theme.module";
 
