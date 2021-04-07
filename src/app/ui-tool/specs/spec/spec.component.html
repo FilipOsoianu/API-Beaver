@@ -1,3 +1,16 @@
-<app-body-generator [specId]="specID">
+<nb-card>
+  <nb-card-body>
+    <nb-tabset>
+      <nb-tab tabTitle="Body Generator">
+        <app-body-generator [specId]="specID">
+        </app-body-generator>
+      </nb-tab>
+      <nb-tab tabTitle="Traits">
+        <ngx-response-generator [specId]="specID">
+        </ngx-response-generator>
+      </nb-tab>
+    </nb-tabset>
+  </nb-card-body>
+</nb-card>
 
-</app-body-generator>
+

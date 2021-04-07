@@ -28,26 +28,10 @@ export class UiToolLayoutComponent implements OnInit {
   public ngOnInit(): void {
     this.menu = [
       {
-        title: 'UI tool',
-        icon: 'settings-outline',
-        children: [
-          {
-            data: {id: 'ObjectGenerator'},
-            title: 'Object Generator',
-            link: '/objectGenerator',
-          },
-        ],
-      },
-      {
         title: 'Spec',
         icon: 'settings-outline',
-        children: [
-          {
-            data: {id: 'Spec'},
-            title: 'Specs',
-            link: '/specs',
-          },
-        ],
+        data: {id: 'Spec'},
+        link: '/specs',
       },
       {
         title: 'User',

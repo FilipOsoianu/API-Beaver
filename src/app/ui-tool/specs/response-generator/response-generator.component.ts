@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'ngx-traits-generator',
-  templateUrl: './traits-generator.component.html',
-  styleUrls: ['./traits-generator.component.css']
+  selector: 'ngx-response-generator',
+  templateUrl: './response-generator.component.html',
+  styleUrls: ['./response-generator.component.css']
 })
-export class TraitsGeneratorComponent implements OnInit {
+export class ResponseGeneratorComponent implements OnInit {
 
   constructor() { }
+  @Input() specId: any;
 
   ngOnInit(): void {
   }

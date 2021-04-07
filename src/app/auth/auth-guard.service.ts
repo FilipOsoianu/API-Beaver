@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {CanActivate, Router} from '@angular/router';
-import {NbAuthJWTToken, NbAuthService, NbAuthSimpleToken} from '@nebular/auth';
+import {NbAuthJWTToken, NbAuthService, NbAuthSimpleToken, NbTokenService} from '@nebular/auth';
 import {tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private authService: NbAuthService, private router: Router) {
+  constructor(private authService: NbAuthService, private router: Router, private nbJwt: NbTokenService) {
   }
 
   canActivate() {
@@ -20,6 +20,7 @@ export class AuthGuard implements CanActivate {
           return false;
         } else {
           this.authService.getToken().subscribe((token: NbAuthSimpleToken) => {
+            this.nbJwt.set(token)
             const jwtToken = new NbAuthJWTToken(token.getValue(), token.getOwnerStrategyName(), token.getCreatedAt());
             const expireDate = new Date(jwtToken.getTokenExpDate());
             localStorage.setItem("user_id", jwtToken.getPayload()['sub']);

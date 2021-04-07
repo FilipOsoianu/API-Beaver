@@ -13,6 +13,10 @@ export const routes: Routes = [
     component: SpecComponent,
   },
   {
+    path:':id/traits',
+    loadChildren: () => import('./response-generator/response-generator.module').then(m => m.ResponseGeneratorModule),
+  },
+  {
     path: ':id/objectGenerator',
     loadChildren: () => import('./body-generator/body-generator.module').then(m => m.BodyGeneratorModule),
   },

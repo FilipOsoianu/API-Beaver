@@ -1,31 +1,26 @@
-import {CommonModule} from '@angular/common';
+import {APP_BASE_HREF, CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 
 import {NgxAuthRoutingModule} from './auth-routing.module';
 import {
-  NB_AUTH_TOKEN_INTERCEPTOR_FILTER,
+  NB_AUTH_TOKEN_INTERCEPTOR_FILTER, NbAuthJWTInterceptor,
   NbAuthJWTToken,
   NbAuthModule,
-  NbAuthToken,
-  NbPasswordAuthStrategy
+  NbPasswordAuthStrategy,
 } from '@nebular/auth';
 import {NbAlertModule, NbButtonModule, NbCheckboxModule, NbInputModule} from '@nebular/theme';
 import {AuthGuard} from './auth-guard.service';
 import {NbRoleProvider, NbSecurityModule} from '@nebular/security';
 
-import {HttpRequest} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {ThemeModule} from "../@theme/theme.module";
 import {ChangePasswordComponent} from "./change-password/change-password.component";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
 
-export function filterInterceptorRequest(req: HttpRequest<any>) {
-  console.log(req);
-  return [].some(url => req.url.includes(url));
-}
 
 @NgModule({
   imports: [
@@ -87,7 +82,7 @@ export function filterInterceptorRequest(req: HttpRequest<any>) {
           redirectDelay: 500, // delayefore redirect after a successful login, while success message is shown to the user
           strategy: 'email', // strategy id key.
           showMessages: {
-              success: true,
+            success: true,
             error: true,
           },
         },
@@ -107,7 +102,7 @@ export function filterInterceptorRequest(req: HttpRequest<any>) {
     }),
     NbSecurityModule.forRoot({
       accessControl: {
-        admin: {
+        user: {
           view: '*',
           create: '*',
           remove: '*',
@@ -123,6 +118,9 @@ export function filterInterceptorRequest(req: HttpRequest<any>) {
   ],
   providers: [
     AuthGuard,
+    { provide: APP_BASE_HREF, useValue: '/' },
+    { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true },
+    { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: (req) => { return false; } },
   ],
 })
 export class NgxAuthModule {

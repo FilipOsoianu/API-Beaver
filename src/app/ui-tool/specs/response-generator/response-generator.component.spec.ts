@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TraitsGeneratorComponent } from './traits-generator.component';
+import { ResponseGeneratorComponent } from './response-generator.component';
 
 describe('TraitsGeneratorComponent', () => {
-  let component: TraitsGeneratorComponent;
-  let fixture: ComponentFixture<TraitsGeneratorComponent>;
+  let component: ResponseGeneratorComponent;
+  let fixture: ComponentFixture<ResponseGeneratorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TraitsGeneratorComponent ]
+      declarations: [ ResponseGeneratorComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TraitsGeneratorComponent);
+    fixture = TestBed.createComponent(ResponseGeneratorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

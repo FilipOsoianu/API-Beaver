@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService} from '@nebular/theme';
 
-import { LayoutService } from '../../../@core/utils';
-import { map, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { Router } from '@angular/router';
-import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
+import {LayoutService} from '../../../@core/utils';
+import {map, takeUntil} from 'rxjs/operators';
+import {Subject} from 'rxjs';
+import {Router} from '@angular/router';
+import {NbAuthJWTToken, NbAuthService} from '@nebular/auth';
 
 @Component({
   selector: 'ngx-header',
@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userPictureOnly: boolean = false;
   user: any;
   currentTheme = 'default';
-  userMenu = [{ title: 'Log out' }];
+  userMenu = [{title: 'Profile'}, {title: 'Log out'}];
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
@@ -41,7 +41,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.onContextItemSelection(event.item.title);
     });
 
-    const { xl } = this.breakpointService.getBreakpointsMap();
+    const {xl} = this.breakpointService.getBreakpointsMap();
     this.themeService
       .onMediaQueryChange()
       .pipe(
@@ -53,7 +53,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.themeService
       .onThemeChange()
       .pipe(
-        map(({ name }) => name),
+        map(({name}) => name),
         takeUntil(this.destroy$),
       )
       .subscribe(themeName => (this.currentTheme = themeName));
@@ -62,6 +62,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onContextItemSelection(title): void {
     if (title === 'Log out') {
       this.router.navigate(['/auth/logout']);
+    } else if (title === 'Profile') {
+      this.router.navigate(['/profile']);
     }
   }
 

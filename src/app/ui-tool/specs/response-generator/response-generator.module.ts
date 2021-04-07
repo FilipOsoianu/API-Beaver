@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {TraitsGeneratorComponent} from "./traits-generator.component";
+import {ResponseGeneratorComponent} from "./response-generator.component";
 import {ThemeModule} from "../../../@theme/theme.module";
 import {HttpClientModule} from "@angular/common/http";
 import {ComponentsPanelModule} from "../../others/components-panel/components-panel.module";
@@ -16,7 +16,7 @@ import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
-    TraitsGeneratorComponent
+    ResponseGeneratorComponent
   ],
   imports: [
     NbCardModule,
@@ -33,8 +33,8 @@ import {FormsModule} from "@angular/forms";
   ],
   providers: [],
   exports: [
-    TraitsGeneratorComponent
+    ResponseGeneratorComponent
   ],
 })
-export class TraitsGeneratorModule {
+export class ResponseGeneratorModule {
 }

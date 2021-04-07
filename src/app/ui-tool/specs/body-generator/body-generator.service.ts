@@ -6,12 +6,9 @@ import {PropertiesModel} from "../../models/properties.model";
 import {NbAuthJWTToken, NbAuthService} from "@nebular/auth";
 import {environment} from "../../../../environments/environment";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class BodyGeneratorService {
-  constructor(private http: HttpClient, private authService: NbAuthService) {
-
+  constructor(private http: HttpClient) {
   }
 
   uploadForm: FormGroup;

@@ -5,16 +5,18 @@ import {UiToolLayoutComponent} from './ui-tool-layout.component';
 import {routing} from './ui-tool.routing';
 
 @NgModule({
-  imports: [
-    routing,
-    ThemeModule,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
-  declarations: [
-    UiToolLayoutComponent,
-  ],
-  providers: [],
+    imports: [
+        routing,
+        ThemeModule,
+        FormsModule,
+        ReactiveFormsModule,
+    ],
+    declarations: [
+        UiToolLayoutComponent,
+    ],
+    providers: [],
+    exports: [
+    ]
 })
 export class UiToolModule {
 }
