@@ -5,9 +5,17 @@
         <app-body-generator [specId]="specID">
         </app-body-generator>
       </nb-tab>
+      <nb-tab tabTitle="Resource types">
+        <ngx-resource-type>
+        </ngx-resource-type>
+      </nb-tab>
       <nb-tab tabTitle="Traits">
-        <ngx-response-generator [specId]="specID">
+        <ngx-response-generator [specId]="3">
         </ngx-response-generator>
+      </nb-tab>
+      <nb-tab tabTitle="Schema">
+        <ngx-schema>
+        </ngx-schema>
       </nb-tab>
     </nb-tabset>
   </nb-card-body>

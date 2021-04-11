@@ -141,24 +141,30 @@ export class PropertiesModel {
       propertiesModel.type = this.type;
       propertiesModel.properties = propertyList;
       service.toRaml(propertiesModel);
-
-      // const file = new File([stringify(parse(JSON.stringify(propertiesModel.toJSON())))], value.name);
-      // saveAs(file, value.name + '.raml');
     });
 
     return newObjectList;
 
   }
 
+  toObjects(service: BodyGeneratorService) {
+    service.toObjects(this);
+    if (this.properties !== null && this.properties !== undefined) {
+      this.properties.forEach(value => {
+        if (value.type === TypeEnum.object) {
+          value.toObjects(service);
+        }
+      });
+    }
+  }
+
   toExample() {
-    const obj = {};
+    let obj = {};
     const object = {};
     if (this.properties !== null && this.properties !== undefined) {
       this.properties.forEach((value: PropertiesModel) => {
-        if (value.type.includes('!include')) {
-          obj[value.name] = value.type;
-        } else if (value.properties !== null && value.type === TypeEnum.object) {
-          obj[value.name] = this.toExample();
+        if (value.type === TypeEnum.object) {
+          obj = value.toExample();
         } else {
           obj[value.name] = value.example;
         }

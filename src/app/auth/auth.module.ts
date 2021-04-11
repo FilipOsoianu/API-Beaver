@@ -118,9 +118,20 @@ import {HTTP_INTERCEPTORS} from "@angular/common/http";
   ],
   providers: [
     AuthGuard,
-    { provide: APP_BASE_HREF, useValue: '/' },
-    { provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true },
-    { provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: (req) => { return false; } },
+    {provide: APP_BASE_HREF, useValue: '/'},
+    {provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true},
+    {
+      provide: NB_AUTH_TOKEN_INTERCEPTOR_FILTER, useValue: (req) => {
+        if (req.url === `${environment.api_url}/users/signin`) {
+          return true;
+        } else if (req.url === `${environment.api_url}/users`) {
+          return true;
+        } else if (req.url === `${environment.api_url}/refresh-token`) {
+          return true;
+        }
+        return false;
+      }
+    },
   ],
 })
 export class NgxAuthModule {

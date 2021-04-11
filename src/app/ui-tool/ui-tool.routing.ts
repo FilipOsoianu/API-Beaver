@@ -7,6 +7,10 @@ const appRoutes: Routes = [
     component: UiToolLayoutComponent,
     children: [
       {
+        path: '',
+        loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
+      },
+      {
         path: 'specs',
         loadChildren: () => import('./specs/specs.module').then(m => m.SpecsModule),
       },

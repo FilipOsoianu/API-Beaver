@@ -1,9 +1,9 @@
-export class MethodModel {
-  name: string;
-  color: string;
+import {MethodEnum} from "../enums/method.enum";
 
-  constructor(name: string, color: string) {
-    this.name = name;
-    this.color = color;
-  }
+export class MethodModel {
+  name: MethodEnum;
+  color: string;
+  description: string;
+
+
 }

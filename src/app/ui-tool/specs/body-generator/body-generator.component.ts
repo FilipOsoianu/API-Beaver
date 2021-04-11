@@ -28,12 +28,23 @@ export class BodyGeneratorComponent implements OnInit {
       if (value !== null) {
         const file = new File([stringify(parse(JSON.stringify(value.toJSON())))], value.name + '.raml');
         saveAs(file, value.name + '.raml');
+
         this.bodyGeneratorService.saveObject(localStorage.getItem('user_id'), this.specId, file).subscribe(value1 => {
           console.log(value1);
         });
       }
     });
 
+    this.bodyGeneratorService.toPropertyObjects.subscribe((value: PropertiesModel) => {
+      if (value !== null) {
+        const file = new File([stringify(parse(JSON.stringify(value.toExample())))], value.name + 'Example.raml');
+        saveAs(file, value.name + 'Example.raml');
+
+        this.bodyGeneratorService.saveObject(localStorage.getItem('user_id'), this.specId, file).subscribe(value1 => {
+          console.log(value1);
+        });
+      }
+    });
 
     this.bodyGeneratorService.newProperty.subscribe((value: PropertiesModel) => {
       if (value !== null) {
@@ -47,16 +58,9 @@ export class BodyGeneratorComponent implements OnInit {
   }
 
   save() {
-    // this.object.toRAMLObject(this.bodyGeneratorService);
-    // this.bodyGeneratorService.downloadObject('jora.raml').subscribe(value => {
-    //   value.text().then(value => {
-    //     this.object = PropertiesModel.fromJson(PropertiesModel.fromYaml(value));
-    //   });
-    // });
 
-
-    // console.log(JSON.stringify(this.object.toExample()));
     this.object.toRAMLObject(this.bodyGeneratorService);
+    this.object.toObjects(this.bodyGeneratorService);
   }
 
 }

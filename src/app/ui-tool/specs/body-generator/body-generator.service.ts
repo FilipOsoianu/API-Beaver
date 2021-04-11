@@ -13,11 +13,16 @@ export class BodyGeneratorService {
 
   uploadForm: FormGroup;
   public ramlProperty: BehaviorSubject<PropertiesModel> = new BehaviorSubject<PropertiesModel>(null);
+  public toPropertyObjects: BehaviorSubject<PropertiesModel> = new BehaviorSubject<PropertiesModel>(null);
   public newProperty: BehaviorSubject<PropertiesModel> = new BehaviorSubject<PropertiesModel>(null);
 
 
   toRaml(data: PropertiesModel) {
     this.ramlProperty.next(data);
+  }
+
+  toObjects(data: PropertiesModel) {
+    this.toPropertyObjects.next(data);
   }
 
   loadObject(data: PropertiesModel) {

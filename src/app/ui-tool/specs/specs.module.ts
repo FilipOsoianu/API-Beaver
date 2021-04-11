@@ -12,6 +12,8 @@ import {Ng2SmartTableModule} from "ng2-smart-table";
 import {SpecsService} from "./specs.service";
 import {BodyGeneratorModule} from "./body-generator/body-generator.module";
 import {ResponseGeneratorModule} from "./response-generator/response-generator.module";
+import {ResourceTypeModule} from "./resource-type/resource-type.module";
+import {SchemaModule} from "./schema/schema.module";
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import {ResponseGeneratorModule} from "./response-generator/response-generator.m
     SpecsRoutingModule,
     BodyGeneratorModule,
     ResponseGeneratorModule,
-    NbTabsetModule
+    NbTabsetModule,
+    ResourceTypeModule,
+    SchemaModule
   ],
   providers: [SpecsService],
   exports: [],

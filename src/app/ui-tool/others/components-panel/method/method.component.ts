@@ -7,7 +7,7 @@ import {MethodModel} from "../../../models/method-model";
   styleUrls: ['./method.component.scss']
 })
 export class MethodComponent implements OnInit {
-  @Input() method: MethodModel;
+  // @Input() method: MethodModel;
 
   constructor() {
   }
