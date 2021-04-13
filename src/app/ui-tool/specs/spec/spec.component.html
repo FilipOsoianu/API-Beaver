@@ -1,6 +1,12 @@
 <nb-card>
   <nb-card-body>
     <nb-tabset>
+
+
+      <nb-tab tabTitle="Traits">
+        <ngx-traits-generator [specId]="3">
+        </ngx-traits-generator>
+      </nb-tab>
       <nb-tab tabTitle="Body Generator">
         <app-body-generator [specId]="specID">
         </app-body-generator>
@@ -8,10 +14,6 @@
       <nb-tab tabTitle="Resource types">
         <ngx-resource-type>
         </ngx-resource-type>
-      </nb-tab>
-      <nb-tab tabTitle="Traits">
-        <ngx-response-generator [specId]="3">
-        </ngx-response-generator>
       </nb-tab>
       <nb-tab tabTitle="Schema">
         <ngx-schema>

@@ -10,23 +10,19 @@ import {
 } from '@nebular/theme';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {ComponentsPanelModule} from '../../others/components-panel/components-panel.module';
 import {ObjectTypeComponent} from './object-type/object-type.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {NameDirective} from '../../shared/name.directive';
-import {ExampleDirective} from '../../shared/example.directive';
 import {EnumToArrayPipe} from "../../pipes/enum-to-array.pipe";
 import {BodyGeneratorRoutingModule} from "./body-generator-routing.module";
 import {ThemeModule} from "../../../@theme/theme.module";
 import {NbAuthJWTInterceptor} from "@nebular/auth";
+import {SpecsModule} from "../specs.module";
+import {SharedModule} from "../../shared/shared.module";
 
 @NgModule({
   declarations: [
     BodyGeneratorComponent,
-    EnumToArrayPipe,
     ObjectTypeComponent,
-    NameDirective,
-    ExampleDirective
   ],
   imports: [
     NbCardModule,
@@ -39,11 +35,12 @@ import {NbAuthJWTInterceptor} from "@nebular/auth";
     NbIconModule,
     HttpClientModule,
     BodyGeneratorRoutingModule,
-    ThemeModule
+    ThemeModule,
+    SharedModule,
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: NbAuthJWTInterceptor, multi: true }],
   exports: [
-    BodyGeneratorComponent
+    BodyGeneratorComponent,
   ],
 })
 export class BodyGeneratorModule {

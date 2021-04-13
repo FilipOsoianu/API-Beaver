@@ -1,0 +1,33 @@
+<div>
+
+<nb-card accent="warning" class="body-generator-card">
+  <input nbInput placeholder="Field name" required appNameValidator (change)="updateHeader()" [(ngModel)]="queryParam.name"
+         #name="ngModel">
+
+  <div *ngIf="queryParam.name && name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+    <div *ngIf="name.errors.nameValidator">
+      invalid character in name
+    </div>
+  </div>
+
+  <div *ngIf="queryParam.name">
+    <nb-select placeholder="Select Type">
+      <nb-option *ngFor="let item of typeEnum | enumToArray" [value]="item" (selectionChange)="setType(item)">
+        {{item}}
+      </nb-option>
+    </nb-select>
+
+    <nb-select placeholder="Required">
+      <nb-option *ngFor="let item of requiredEnum | enumToArray" [value]="item" (selectionChange)="setRequired(item)">
+        {{item}}
+      </nb-option>
+    </nb-select>
+
+  </div>
+
+<!--  <input type="text" nbInput placeholder="Example" [(ngModel)]="queryParam.example" required-->
+<!--         [appExampleValidator]="queryParam.type" #example="ngModel" (change)="updateHeader()">-->
+
+</nb-card>
+</div>
+

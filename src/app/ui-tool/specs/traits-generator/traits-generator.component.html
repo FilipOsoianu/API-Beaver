@@ -1,0 +1,49 @@
+<nb-card accent="primary" class="body-generator-card">
+  <input nbInput placeholder="trait name" required appNameValidator (change)="updateTrait()" [(ngModel)]="trait.name"
+         #name="ngModel">
+
+  <div *ngIf="trait.name && name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+
+    <div *ngIf="name.errors.nameValidator">
+      invalid character in name
+    </div>
+  </div>
+
+  <div *ngIf="trait.header">
+    <nb-card accent="success" class="body-generator-card">
+      <div *ngFor="let header of trait.header">
+        <app-header [header]="header" (headerChange)="updateTrait($event)">
+        </app-header>
+      </div>
+    </nb-card>
+  </div>
+
+  <div class="card">
+    <button nbButton status="basic" (click)="addHeader()">Add Header</button>
+  </div>
+
+  <div *ngIf="trait.queryParams">
+    <nb-card accent="warning" class="body-generator-card">
+      <div *ngFor="let queryParam of trait.queryParams">
+        <app-query-param [queryParam]="queryParam" (queryParamChange)="updateTrait($event)">
+        </app-query-param>
+      </div>
+    </nb-card>
+  </div>
+
+  <div class="card">
+    <button nbButton status="basic" (click)="addQueryParams()">Add Query Params</button>
+  </div>
+
+  <div *ngIf="trait.body">
+    <div *ngFor="let body of trait.body">
+      dada
+    </div>
+  </div>
+
+  <div *ngIf="!trait.body" class="card">
+    <button nbButton status="basic" (click)="addBody()">Add Body</button>
+  </div>
+
+</nb-card>
+

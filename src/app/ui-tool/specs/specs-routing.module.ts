@@ -14,7 +14,7 @@ export const routes: Routes = [
   },
   {
     path: ':id/traits',
-    loadChildren: () => import('./response-generator/response-generator.module').then(m => m.ResponseGeneratorModule),
+    loadChildren: () => import('./traits-generator/traits-generator.module').then(m => m.TraitsGeneratorModule),
   },
   {
     path: ':id/object-generator',

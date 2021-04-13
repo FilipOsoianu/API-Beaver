@@ -1,0 +1,17 @@
+.body-generator-card {
+    width: max-content;
+    margin: 20px;
+    flex-flow: row wrap;
+}
+
+.display-inline {
+    display: inline-block;
+}
+
+.bda {
+    width: 50px;
+}
+
+.nb-theme-default .nb-card {
+    background-color: red;
+}
