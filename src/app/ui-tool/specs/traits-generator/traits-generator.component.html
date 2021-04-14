@@ -1,6 +1,29 @@
 <nb-card accent="primary" class="body-generator-card">
-  <input nbInput placeholder="trait name" required appNameValidator (change)="updateTrait()" [(ngModel)]="trait.name"
-         #name="ngModel">
+  <div class="show-in-row">
+    <div class="normal">
+      <label class="label" for="trait-name">Trait name</label>
+      <input id="trait-name" nbInput placeholder="Trait name" required appNameValidator
+             [(ngModel)]="trait.name"
+             #name="ngModel">
+    </div>
+    <div class="normal">
+      <label class="label" for="is-response">Response</label>
+      <nb-select id="is-response" placeholder="is Response" [selected]="requiredEnum.false">
+        <nb-option *ngFor="let item of requiredEnum | enumToArray" [value]="item" (selectionChange)="setResponse(item)">
+          {{item}}
+        </nb-option>
+      </nb-select>
+    </div>
+    <div *ngIf="trait.response" class="normal">
+      <label class="label" for="status-code"> Status code</label>
+      <nb-select id="status-code" placeholder="status code">
+        <nb-option *ngFor="let item of statusCode | enumToKeysArray" [value]="item"
+                   (selectionChange)="setStatusCode(item)">
+          {{item}}
+        </nb-option>
+      </nb-select>
+    </div>
+  </div>
 
   <div *ngIf="trait.name && name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
 
@@ -10,40 +33,47 @@
   </div>
 
   <div *ngIf="trait.header">
-    <nb-card accent="success" class="body-generator-card">
-      <div *ngFor="let header of trait.header">
-        <app-header [header]="header" (headerChange)="updateTrait($event)">
+    <label class="label" for="header">Header</label>
+    <nb-card id="header" accent="success" class="params-card">
+      <div *ngFor="let header of trait.header; index as i">
+        <app-header [header]="header" (headerChange)="updateHeader($event, i)">
         </app-header>
       </div>
     </nb-card>
   </div>
-
-  <div class="card">
+  <div class="params-card">
     <button nbButton status="basic" (click)="addHeader()">Add Header</button>
   </div>
+  <div *ngIf="!trait.response">
+    <div *ngIf="trait.queryParams">
+      <label class="label" for="query-params">Query params</label>
+      <nb-card id="query-params" accent="warning" class="params-card">
+        <div *ngFor="let queryParam of trait.queryParams; index as i">
+          <app-query-param [queryParam]="queryParam" (queryParamChange)="updateQuery($event, i)">
+          </app-query-param>
+        </div>
+      </nb-card>
+    </div>
 
-  <div *ngIf="trait.queryParams">
-    <nb-card accent="warning" class="body-generator-card">
-      <div *ngFor="let queryParam of trait.queryParams">
-        <app-query-param [queryParam]="queryParam" (queryParamChange)="updateTrait($event)">
-        </app-query-param>
-      </div>
-    </nb-card>
+    <div class="params-card">
+      <button nbButton status="basic" (click)="addQueryParams()">Add Query Params</button>
+    </div>
   </div>
 
-  <div class="card">
-    <button nbButton status="basic" (click)="addQueryParams()">Add Query Params</button>
-  </div>
 
   <div *ngIf="trait.body">
-    <div *ngFor="let body of trait.body">
+    <label class="label" for="body">Body</label>
+    <div id="body" *ngFor="let body of trait.body">
       dada
     </div>
   </div>
 
-  <div *ngIf="!trait.body" class="card">
+  <div *ngIf="!trait.body" class="params-card">
     <button nbButton status="basic" (click)="addBody()">Add Body</button>
   </div>
+
+
+  <button nbButton status="basic" (click)="save()">SAVE</button>
 
 </nb-card>
 

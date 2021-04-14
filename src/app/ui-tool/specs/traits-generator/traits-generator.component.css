@@ -1,5 +1,16 @@
-.card {
-  margin-top: 5px;
+.params-card {
+  margin-top: 10px;
   margin-bottom: 10px;
   width: min-content;
 }
+
+.show-in-row{
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.normal{
+  display: grid;
+}
+

@@ -3,6 +3,9 @@ import {TraitsModel} from "../../models/traits.model";
 import {HeaderModel} from "../../models/header.model";
 import {QueryParamsModel} from "../../models/query-params.model";
 import {BodyModel} from "../../models/body.model";
+import {RequiredEnum} from "../../enums/required.enum";
+import {STATUS_CODES} from "../../enums/status-code.const";
+import {parse, stringify} from "yaml";
 
 @Component({
   selector: 'ngx-traits-generator',
@@ -17,12 +20,20 @@ export class TraitsGeneratorComponent implements OnInit {
   @Input() specId: any;
 
   trait: TraitsModel = new TraitsModel();
+  requiredEnum = RequiredEnum;
+  statusCode = STATUS_CODES;
 
   ngOnInit(): void {
   }
 
-  updateTrait(event): void {
-    console.log(event);
+  updateHeader(event, index): void {
+    this.trait.header[index] = event;
+    console.log(this.trait)
+  }
+
+
+  updateQuery(event, index): void {
+    this.trait.queryParams[index] = event;
   }
 
 
@@ -33,6 +44,16 @@ export class TraitsGeneratorComponent implements OnInit {
       this.trait.header = [new HeaderModel()];
     }
   }
+
+  setResponse(required: RequiredEnum): void {
+    this.trait.response = required !== RequiredEnum.false;
+  }
+
+  setStatusCode(statusCode: any): void {
+    this.trait.statusCode = STATUS_CODES[statusCode];
+    console.log(this.trait.statusCode);
+  }
+
 
   addQueryParams(): void {
     if (this.trait.queryParams) {
@@ -45,5 +66,10 @@ export class TraitsGeneratorComponent implements OnInit {
   addBody(): void {
     this.trait.body = [new BodyModel()];
   }
+
+  save(): void {
+    console.log(stringify(parse(JSON.stringify(this.trait.toJSON()))));
+  }
+
 
 }

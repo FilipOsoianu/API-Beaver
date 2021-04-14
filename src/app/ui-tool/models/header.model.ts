@@ -1,5 +1,4 @@
 import {TypeEnum} from "../enums/type.enum";
-import {RequiredEnum} from "../enums/required.enum";
 
 export class HeaderModel {
   name: string;
@@ -7,4 +6,17 @@ export class HeaderModel {
   type: TypeEnum | any;
   required: boolean;
   example: string;
+
+  toJSON() {
+    const obj = {};
+    obj[this.name] = {
+      type: this.type,
+      required: this.required,
+      example: this.example,
+      description: this.description
+    };
+
+    return obj;
+  }
+
 }

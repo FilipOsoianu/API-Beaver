@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {NameDirective} from "./name.directive";
 import {ExampleDirective} from "./example.directive";
 import {EnumToArrayPipe} from "../pipes/enum-to-array.pipe";
+import {EnumToKeysArrayPipe} from "../pipes/enum-to-keys-array.pipe";
 
 
 @NgModule({
@@ -9,6 +10,7 @@ import {EnumToArrayPipe} from "../pipes/enum-to-array.pipe";
     NameDirective,
     ExampleDirective,
     EnumToArrayPipe,
+    EnumToKeysArrayPipe
   ],
   imports: [
 
@@ -18,6 +20,7 @@ import {EnumToArrayPipe} from "../pipes/enum-to-array.pipe";
     NameDirective,
     ExampleDirective,
     EnumToArrayPipe,
+    EnumToKeysArrayPipe
   ],
 })
 export class SharedModule {

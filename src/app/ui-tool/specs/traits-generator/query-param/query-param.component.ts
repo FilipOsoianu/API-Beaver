@@ -31,15 +31,17 @@ export class QueryParamComponent implements OnInit {
   }
 
   setType(type: TypeEnum): void {
-    // this.queryParam.type = type;
+    this.queryParam.type = type;
   }
 
   setRequired(required: RequiredEnum): void {
-    // this.header.required = required !== RequiredEnum.false;
+    this.queryParam.required = required !== RequiredEnum.false;
   }
 
   updateHeader(): void {
-    // this.headerChange.emit(this.header);
+    this.queryParamChange.emit(this.queryParam);
   }
+
+
 
 }
