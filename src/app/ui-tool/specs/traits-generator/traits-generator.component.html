@@ -6,24 +6,28 @@
              [(ngModel)]="trait.name"
              #name="ngModel">
     </div>
-    <div class="normal">
-      <label class="label" for="is-response">Response</label>
-      <nb-select id="is-response" placeholder="is Response" [selected]="requiredEnum.false">
-        <nb-option *ngFor="let item of requiredEnum | enumToArray" [value]="item" (selectionChange)="setResponse(item)">
-          {{item}}
-        </nb-option>
-      </nb-select>
-    </div>
-    <div *ngIf="trait.response" class="normal">
-      <label class="label" for="status-code"> Status code</label>
-      <nb-select id="status-code" placeholder="status code">
-        <nb-option *ngFor="let item of statusCode | enumToKeysArray" [value]="item"
-                   (selectionChange)="setStatusCode(item)">
-          {{item}}
-        </nb-option>
-      </nb-select>
+    <div class="show-in-row">
+      <div class="normal">
+        <label class="label" for="is-response">Response</label>
+        <nb-select id="is-response" placeholder="is Response" [selected]="requiredEnum.false">
+          <nb-option *ngFor="let item of requiredEnum | enumToArray" [value]="item"
+                     (selectionChange)="setResponse(item)">
+            {{item}}
+          </nb-option>
+        </nb-select>
+      </div>
+      <div *ngIf="trait.response" class="normal">
+        <label class="label" for="status-code"> Status code</label>
+        <nb-select id="status-code" placeholder="status code">
+          <nb-option *ngFor="let item of statusCode | enumToKeysArray" [value]="item"
+                     (selectionChange)="setStatusCode(item)">
+            {{item}}
+          </nb-option>
+        </nb-select>
+      </div>
     </div>
   </div>
+
 
   <div *ngIf="trait.name && name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
 
@@ -61,17 +65,12 @@
   </div>
 
 
-  <div *ngIf="trait.body">
-    <label class="label" for="body">Body</label>
-    <div id="body" *ngFor="let body of trait.body">
-      dada
-    </div>
-  </div>
-
-  <div *ngIf="!trait.body" class="params-card">
-    <button nbButton status="basic" (click)="addBody()">Add Body</button>
-  </div>
-
+  <label class="label" for="body">Body</label>
+  <nb-select class="params-card" id="body" placeholder="Select existing object" (click)="loadFileNames()">
+    <nb-option *ngFor="let item of filesName" [value]="item" (selectionChange)="selectFile(item)">
+      {{item}}
+    </nb-option>
+  </nb-select>
 
   <button nbButton status="basic" (click)="save()">SAVE</button>
 

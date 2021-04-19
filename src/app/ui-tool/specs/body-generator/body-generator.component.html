@@ -1,8 +1,9 @@
-<nb-card accent="primary">
-  <input type="text" nbInput placeholder="Type name" [(ngModel)]="object.name">
-  <app-object-type [property]="object" (propertyChange)="updateProperty($event)" [specId]="specId">
-  </app-object-type>
-</nb-card>
+<div class="normal">
+  <label class="label" for="property-name">Type Name</label>
+  <input id="property-name" type="text" nbInput placeholder="Type name" [(ngModel)]="object.name">
+</div>
+<app-object-type [property]="object" (propertyChange)="updateProperty($event)" [specId]="specId">
+</app-object-type>
 
 <button nbButton status="basic" (click)="save()">Save</button>
 

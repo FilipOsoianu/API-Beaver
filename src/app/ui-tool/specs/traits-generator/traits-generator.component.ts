@@ -2,10 +2,10 @@ import {Component, Input, OnInit} from '@angular/core';
 import {TraitsModel} from "../../models/traits.model";
 import {HeaderModel} from "../../models/header.model";
 import {QueryParamsModel} from "../../models/query-params.model";
-import {BodyModel} from "../../models/body.model";
 import {RequiredEnum} from "../../enums/required.enum";
 import {STATUS_CODES} from "../../enums/status-code.const";
 import {parse, stringify} from "yaml";
+import {TraitsGeneratorService} from "./traits-generator.service";
 
 @Component({
   selector: 'ngx-traits-generator',
@@ -14,7 +14,7 @@ import {parse, stringify} from "yaml";
 })
 export class TraitsGeneratorComponent implements OnInit {
 
-  constructor() {
+  constructor(private traitsGeneratorService: TraitsGeneratorService) {
   }
 
   @Input() specId: any;
@@ -22,6 +22,7 @@ export class TraitsGeneratorComponent implements OnInit {
   trait: TraitsModel = new TraitsModel();
   requiredEnum = RequiredEnum;
   statusCode = STATUS_CODES;
+  filesName: any;
 
   ngOnInit(): void {
   }
@@ -63,8 +64,16 @@ export class TraitsGeneratorComponent implements OnInit {
     }
   }
 
-  addBody(): void {
-    this.trait.body = [new BodyModel()];
+
+  loadFileNames() {
+    this.traitsGeneratorService.loadFilesList(localStorage.getItem('user_id'), this.specId).subscribe(value => {
+      this.filesName = [];
+      this.filesName = this.filesName.concat(value);
+    });
+  }
+
+  selectFile(event) {
+    this.trait.body = event;
   }
 
   save(): void {

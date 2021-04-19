@@ -1,14 +1,14 @@
-import {BodyModel} from "./body.model";
 import {HeaderModel} from "./header.model";
 import {QueryParamsModel} from "./query-params.model";
+import {PropertiesModel} from "./properties.model";
 
 export class TraitsModel {
   name: string;
   response: boolean;
-  statusCode: string;
+  statusCode: number;
   header: HeaderModel[];
   queryParams: QueryParamsModel[];
-  body: BodyModel[];
+  body: PropertiesModel;
 
 
   toJSON() {
@@ -38,9 +38,11 @@ export class TraitsModel {
         obj['queryParams'] = queryParams;
       }
     }
-    // if (this.body !== null) {
-    //   obj['body'] = this.body;
-    // }
+    if (this.body !== null) {
+      obj['body'] = {
+        type: this.body.name
+      };
+    }
 
     if (this.response) {
       responseObj[this.statusCode] = obj;
