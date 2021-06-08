@@ -39,8 +39,7 @@ export class BodyGeneratorService {
   }
 
   downloadObject(userId: any, specId: any, fileName: string): Observable<Blob> {
-
-    return this.http.get(environment.api_url + `/users/${userId}/specs/${specId}/files` + fileName, {responseType: 'blob'});
+    return this.http.get(environment.api_url + "/users/" + userId + "/specs/" + specId + "/files/" + fileName, {responseType: 'blob'});
   }
 
 

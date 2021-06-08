@@ -1,6 +1,6 @@
 export enum TypeEnum {
-  number = 'Number',
-  string = 'String',
-  object = 'Object',
-  array = 'Array',
+  number = 'number',
+  string = 'string',
+  object = 'object',
+  array = 'array',
 }

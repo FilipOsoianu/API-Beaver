@@ -1,10 +1,15 @@
-<nb-card accent="primary" class="body-generator-card">
+<nb-card class="general-card" accent="primary">
   <div class="show-in-row">
     <div class="normal">
       <label class="label" for="trait-name">Trait name</label>
       <input id="trait-name" nbInput placeholder="Trait name" required appNameValidator
              [(ngModel)]="trait.name"
              #name="ngModel">
+      <div *ngIf="trait.name && name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+        <div *ngIf="name.errors.nameValidator">
+          invalid character in name
+        </div>
+      </div>
     </div>
     <div class="show-in-row">
       <div class="normal">
@@ -25,16 +30,17 @@
           </nb-option>
         </nb-select>
       </div>
+      <div class="normal" *ngIf="!trait.name">
+        <label class="label" for="trait-name">Select from saved</label>
+        <nb-select placeholder="Select existing object" (click)="loadFileNames()">
+          <nb-option *ngFor="let item of filesName" [value]="item" (selectionChange)="loadFile(object,item)">
+            {{item}}
+          </nb-option>
+        </nb-select>
+      </div>
     </div>
   </div>
 
-
-  <div *ngIf="trait.name && name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
-
-    <div *ngIf="name.errors.nameValidator">
-      invalid character in name
-    </div>
-  </div>
 
   <div *ngIf="trait.header">
     <label class="label" for="header">Header</label>

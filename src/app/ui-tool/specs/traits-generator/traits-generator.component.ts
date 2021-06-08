@@ -6,6 +6,9 @@ import {RequiredEnum} from "../../enums/required.enum";
 import {STATUS_CODES} from "../../enums/status-code.const";
 import {parse, stringify} from "yaml";
 import {TraitsGeneratorService} from "./traits-generator.service";
+import {ActivatedRoute} from "@angular/router";
+import {saveAs} from 'file-saver';
+import {PropertiesModel} from "../../models/properties.model";
 
 @Component({
   selector: 'ngx-traits-generator',
@@ -14,11 +17,11 @@ import {TraitsGeneratorService} from "./traits-generator.service";
 })
 export class TraitsGeneratorComponent implements OnInit {
 
-  constructor(private traitsGeneratorService: TraitsGeneratorService) {
+  constructor(private traitsGeneratorService: TraitsGeneratorService, private activatedRoute: ActivatedRoute) {
+    this.specId = this.activatedRoute.snapshot.paramMap.get('id');
   }
 
-  @Input() specId: any;
-
+  specId: any;
   trait: TraitsModel = new TraitsModel();
   requiredEnum = RequiredEnum;
   statusCode = STATUS_CODES;
@@ -72,12 +75,27 @@ export class TraitsGeneratorComponent implements OnInit {
     });
   }
 
+  loadFile(traitsModel: TraitsModel, fileName: string) {
+    this.traitsGeneratorService.downloadObject(localStorage.getItem('user_id'), this.specId, fileName).subscribe(value => {
+      value.text().then(value1 => {
+        this.trait = TraitsModel.fromJson(TraitsModel.fromYaml(value1));
+        // this.object = PropertiesModel.fromJson(PropertiesModel.fromYaml(value1), this.specId, this.bodyGeneratorService);
+      });
+    });
+  }
+
   selectFile(event) {
     this.trait.body = event;
   }
 
   save(): void {
-    console.log(stringify(parse(JSON.stringify(this.trait.toJSON()))));
+    const file = new File([stringify(parse(JSON.stringify(this.trait.toJSON())))], this.trait.name + 'Trait.raml');
+    saveAs(file, this.trait.name + 'Trait.raml');
+
+    this.traitsGeneratorService.saveObject(localStorage.getItem('user_id'), this.specId, file).subscribe(value1 => {
+      console.log(value1);
+    });
+
   }
 
 

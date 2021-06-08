@@ -3,6 +3,7 @@ import {BodyGeneratorService} from '../body-generator.service';
 import {PropertiesModel} from "../../../models/properties.model";
 import {TypeEnum} from "../../../enums/type.enum";
 import {RequiredEnum} from "../../../enums/required.enum";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-object-type',
@@ -14,9 +15,10 @@ export class ObjectTypeComponent implements OnInit {
 
   @Input() property: PropertiesModel;
   @Output() propertyChange = new EventEmitter<PropertiesModel>();
-  @Input() specId: any;
+  specId: any;
 
-  constructor(private bodyGeneratorService: BodyGeneratorService) {
+  constructor(private bodyGeneratorService: BodyGeneratorService, private activatedRoute: ActivatedRoute) {
+    this.specId = this.activatedRoute.snapshot.paramMap.get('id');
   }
 
   typeEnum = TypeEnum;
@@ -30,7 +32,11 @@ export class ObjectTypeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.property.specId = this.specId;
+  }
 
+  minimiseProprieties(): void {
+    this.minimise = !this.minimise;
   }
 
   generateNewProperty(property: PropertiesModel) {
@@ -75,7 +81,7 @@ export class ObjectTypeComponent implements OnInit {
     this.bodyGeneratorService.downloadObject(localStorage.getItem('user_id'), this.specId, fileName).subscribe(value => {
       value.text().then(value1 => {
         const property = this.property.properties.findIndex((obj => obj.name === propertyModel.name));
-        this.property.properties[property] = PropertiesModel.fromJson(PropertiesModel.fromYaml(value1), this.bodyGeneratorService);
+        this.property.properties[property] = PropertiesModel.fromJson(PropertiesModel.fromYaml(value1), this.specId, this.bodyGeneratorService);
         this.updateProperty();
       });
     });

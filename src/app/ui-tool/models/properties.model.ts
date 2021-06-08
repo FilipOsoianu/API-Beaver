@@ -11,6 +11,7 @@ export class PropertiesModel {
   properties: PropertiesModel[];
   specId: any;
 
+
   constructor(type?: TypeEnum | string, name?: string, required?: boolean,
               example?: string,
               properties?: PropertiesModel[]) {
@@ -53,7 +54,7 @@ export class PropertiesModel {
     return Object.values(value)[0];
   }
 
-  static fromJson(jsonString: string, bodyGeneratorService: BodyGeneratorService): PropertiesModel {
+  static fromJson(jsonString: string, specId, bodyGeneratorService: BodyGeneratorService): PropertiesModel {
     let prop = new PropertiesModel();
     let json;
     if (JSON.parse(jsonString) != null) {
@@ -62,6 +63,7 @@ export class PropertiesModel {
       json = jsonString;
     }
     prop.name = this.getName(json)[0];
+    prop.specId = specId;
     const value = this.getValue(json);
     if (value != null && value.type != null) {
       if (value.type.includes('!include')) {
@@ -75,11 +77,11 @@ export class PropertiesModel {
         prop.properties = [];
         if (value.properties != null) {
           value.properties.forEach(property => {
-            let tempProperty = this.fromJson(this.toString(property), bodyGeneratorService);
+            let tempProperty = this.fromJson(this.toString(property),specId, bodyGeneratorService);
             if (tempProperty.loadFile) {
               bodyGeneratorService.downloadObject(localStorage.getItem('user_id'), prop.specId, tempProperty.name + '.raml').subscribe(value1 => {
                 value1.text().then(value2 => {
-                  tempProperty = PropertiesModel.fromJson(PropertiesModel.fromYaml(value2), bodyGeneratorService);
+                  tempProperty = PropertiesModel.fromJson(PropertiesModel.fromYaml(value2),specId, bodyGeneratorService);
                   prop.properties.push(tempProperty);
                 });
               });
@@ -104,6 +106,7 @@ export class PropertiesModel {
           type: this.type,
           required: this.required,
           properties: this.properties,
+          examples: '!include ' + this.name + 'Example.raml'
         };
       return obj;
     } else {
@@ -123,7 +126,7 @@ export class PropertiesModel {
     const propertyList = [];
     newObjectList.push(this);
 
-    if (this.properties !== null && this.properties !== undefined) {
+    if (this.properties) {
       this.properties.forEach(value => {
         if (value.type === TypeEnum.object) {
           value.toRAMLObject(service);
@@ -144,7 +147,6 @@ export class PropertiesModel {
     });
 
     return newObjectList;
-
   }
 
   toObjects(service: BodyGeneratorService) {
@@ -160,18 +162,16 @@ export class PropertiesModel {
 
   toExample() {
     let obj = {};
-    const object = {};
-    if (this.properties !== null && this.properties !== undefined) {
+    if (this.properties) {
       this.properties.forEach((value: PropertiesModel) => {
         if (value.type === TypeEnum.object) {
-          obj = value.toExample();
+          obj[value.name] = value.toExample();
         } else {
           obj[value.name] = value.example;
         }
       });
     }
-    object[this.name] = obj;
-    return object;
+    return obj;
   }
 
 }

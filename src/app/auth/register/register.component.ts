@@ -6,7 +6,6 @@ import {NbAuthResult, NbLoginComponent, NbRegisterComponent} from '@nebular/auth
   templateUrl: './register.component.html',
 })
 export class RegisterComponent extends NbRegisterComponent {
-
   register() {
     this.service.register(this.strategy, this.user).subscribe((result: NbAuthResult) => {
       this.submitted = false;
@@ -19,7 +18,6 @@ export class RegisterComponent extends NbRegisterComponent {
       setTimeout(() => {
         return this.router.navigateByUrl(redirect);
       }, this.redirectDelay);
-      // this.cd.detectChanges();
     });
   }
 }

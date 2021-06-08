@@ -5,6 +5,7 @@ import {saveAs} from 'file-saver';
 import {BodyGeneratorService} from './body-generator.service';
 import {PropertiesModel} from "../../models/properties.model";
 import {TypeEnum} from "../../enums/type.enum";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-body-generator',
@@ -14,19 +15,26 @@ import {TypeEnum} from "../../enums/type.enum";
 export class BodyGeneratorComponent implements OnInit {
 
   object: PropertiesModel;
-  @Input() specId: any;
 
 
-  constructor(private bodyGeneratorService: BodyGeneratorService) {
+  specId: any;
+  filesName: string[] = [];
+
+
+  constructor(private bodyGeneratorService: BodyGeneratorService, private activatedRoute: ActivatedRoute) {
     this.object = new PropertiesModel(TypeEnum.object);
-    this.object.specId = this.specId;
-    this.object.properties.push(new PropertiesModel());
+    this.specId = this.activatedRoute.snapshot.paramMap.get('id');
+
   }
 
   ngOnInit() {
+
     this.bodyGeneratorService.ramlProperty.subscribe((value: PropertiesModel) => {
       if (value !== null) {
-        const file = new File([stringify(parse(JSON.stringify(value.toJSON())))], value.name + '.raml');
+
+        const object = '#%RAML 1.0 DataType \n' + stringify(parse(JSON.stringify(value.toJSON())));
+
+        const file = new File([object], value.name + '.raml');
         saveAs(file, value.name + '.raml');
 
         this.bodyGeneratorService.saveObject(localStorage.getItem('user_id'), this.specId, file).subscribe(value1 => {
@@ -37,7 +45,10 @@ export class BodyGeneratorComponent implements OnInit {
 
     this.bodyGeneratorService.toPropertyObjects.subscribe((value: PropertiesModel) => {
       if (value !== null) {
-        const file = new File([stringify(parse(JSON.stringify(value.toExample())))], value.name + 'Example.raml');
+        const object = {};
+        object[value.name] = value.toExample();
+        const example = '#%RAML 1.0 NamedExample \n' + stringify(parse(JSON.stringify(object)));
+        const file = new File([example], value.name + 'Example.raml');
         saveAs(file, value.name + 'Example.raml');
 
         this.bodyGeneratorService.saveObject(localStorage.getItem('user_id'), this.specId, file).subscribe(value1 => {
@@ -55,6 +66,21 @@ export class BodyGeneratorComponent implements OnInit {
 
 
   updateProperty(property: PropertiesModel): void {
+  }
+
+  loadFile(propertyModel: PropertiesModel, fileName: string) {
+    this.bodyGeneratorService.downloadObject(localStorage.getItem('user_id'), this.specId, fileName).subscribe(value => {
+      value.text().then(value1 => {
+        this.object = PropertiesModel.fromJson(PropertiesModel.fromYaml(value1), this.specId, this.bodyGeneratorService);
+      });
+    });
+  }
+
+  loadFileNames() {
+    this.bodyGeneratorService.loadFilesList(localStorage.getItem('user_id'), this.specId).subscribe(value => {
+      this.filesName = [];
+      this.filesName = this.filesName.concat(value);
+    });
   }
 
   save() {

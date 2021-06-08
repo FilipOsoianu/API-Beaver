@@ -1,10 +1,29 @@
-<div class="normal">
-  <label class="label" for="property-name">Type Name</label>
-  <input id="property-name" type="text" nbInput placeholder="Type name" [(ngModel)]="object.name">
-</div>
-<app-object-type [property]="object" (propertyChange)="updateProperty($event)" [specId]="specId">
-</app-object-type>
+<nb-card class="general-card">
+  <div class="show-in-row">
 
-<button nbButton status="basic" (click)="save()">Save</button>
+    <div class="normal">
+      <label class="label" for="property-name">Type Name</label>
+      <input id="property-name" type="text" nbInput required appNameValidator placeholder="Type name"
+             [(ngModel)]="object.name" #name="ngModel">
 
+      <div *ngIf=" name.invalid && (name.dirty || name.touched)" class="alert alert-danger ">
+        <div *ngIf="name.errors.nameValidator">
+          invalid character in name
+        </div>
+      </div>
+    </div>
+    <div class="normal" *ngIf="!object.name">
+      <label class="label" for="property-name">Select from saved</label>
+      <nb-select placeholder="Select existing object" (click)="loadFileNames()">
+        <nb-option *ngFor="let item of filesName" [value]="item" (selectionChange)="loadFile(object,item)">
+          {{item}}
+        </nb-option>
+      </nb-select>
+    </div>
+  </div>
 
+  <app-object-type [property]="object" (propertyChange)="updateProperty($event)">
+  </app-object-type>
+
+  <button nbButton status="basic" (click)="save()">Save</button>
+</nb-card>

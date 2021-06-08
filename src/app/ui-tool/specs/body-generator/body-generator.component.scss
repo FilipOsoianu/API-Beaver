@@ -1,9 +1,21 @@
 .normal {
   display: grid;
+  width: min-content;
 }
 
 .body-generator {
   margin: 20px;
 }
 
+.general-card {
+  gap: 10px;
+  display: grid;
+  padding: 10px;
+}
 
+.show-in-row {
+  margin-top: 10px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}

@@ -8,7 +8,9 @@
     display: inline-block;
 }
 
-
+.normal {
+  display: grid;
+}
 
 .nb-theme-default .nb-card {
     background-color: red;

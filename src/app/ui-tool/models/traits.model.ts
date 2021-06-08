@@ -1,6 +1,7 @@
 import {HeaderModel} from "./header.model";
 import {QueryParamsModel} from "./query-params.model";
 import {PropertiesModel} from "./properties.model";
+import {parse} from "yaml";
 
 export class TraitsModel {
   name: string;
@@ -17,14 +18,14 @@ export class TraitsModel {
     let finalObj = {};
     const headers = [];
     const queryParams = [];
-    if (this.header != null &&
+    if (this.header &&
       this.header.length > 0) {
       this.header.forEach(value => {
         headers.push(value.toJSON());
       })
     }
 
-    if (this.queryParams != null &&
+    if (this.queryParams &&
       this.queryParams.length > 0) {
       this.queryParams.forEach(value => {
         queryParams.push(value.toJSON());
@@ -38,7 +39,7 @@ export class TraitsModel {
         obj['queryParams'] = queryParams;
       }
     }
-    if (this.body !== null) {
+    if (this.body) {
       obj['body'] = {
         type: this.body.name
       };
@@ -54,5 +55,40 @@ export class TraitsModel {
     }
     return finalObj;
   }
+
+  static fromYaml(value) {
+    return JSON.stringify(parse(value));
+  }
+
+  static getName(value) {
+    return Object.keys(value);
+  }
+
+  static getValue(value): any {
+    return Object.values(value)[0];
+  }
+
+
+  static fromJson(jsonString) {
+    const model = new TraitsModel();
+    let json;
+    if (JSON.parse(jsonString) != null) {
+      json = JSON.parse(jsonString);
+    } else {
+      json = jsonString;
+    }
+
+    if (json) {
+      if (this.getValue(json).headers) {
+        model.header = [];
+        this.getValue(json).headers.forEach((value) => {
+    model.header.push(HeaderModel.fromJson(value));
+
+        });
+      }
+    }
+    return model;
+  }
+
 
 }

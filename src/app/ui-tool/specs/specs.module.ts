@@ -13,9 +13,6 @@ import {SpecsService} from "./specs.service";
 import {BodyGeneratorModule} from "./body-generator/body-generator.module";
 import {ResourceTypeModule} from "./resource-type/resource-type.module";
 import {SchemaModule} from "./schema/schema.module";
-import {NameDirective} from "../shared/name.directive";
-import {ExampleDirective} from "../shared/example.directive";
-import {EnumToArrayPipe} from "../pipes/enum-to-array.pipe";
 import {TraitsGeneratorModule} from "./traits-generator/traits-generator.module";
 
 

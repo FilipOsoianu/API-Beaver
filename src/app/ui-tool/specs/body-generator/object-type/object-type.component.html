@@ -1,85 +1,98 @@
-<div *ngFor="let propertyModel of property.properties">
-  <nb-card class="card-margin" [accent]="propertyModel.type === typeEnum.object ? 'info' :propertyModel.type === typeEnum.number? 'success':
+<div *ngIf="!minimise">
+  <div *ngFor="let propertyModel of property.properties">
+    <nb-card class="card-margin" [accent]="propertyModel.type === typeEnum.object ? 'info' :propertyModel.type === typeEnum.number? 'success':
           propertyModel.type === typeEnum.string?'warning':propertyModel.type === typeEnum.array?'primary':'control'">
-    <div [ngClass]="propertyModel.type===typeEnum.object?'object-body':'show-in-row'">
-      <div class="show-in-row">
+      <div [ngClass]="propertyModel.type===typeEnum.object?'object-body':'show-in-row'">
+        <div class="show-in-row">
 
-        <div class="normal">
-          <div class="normal" *ngIf="propertyModel.type===typeEnum.object">
-            <label class="label" for="property-name">Type Name</label>
+          <div class="normal">
+            <div class="normal" *ngIf="propertyModel.type===typeEnum.object">
+              <label class="label" for="property-name">Type Name</label>
+            </div>
+            <div class="normal" *ngIf="propertyModel.type!==typeEnum.object">
+              <label class="label" for="property-name">Property Name</label>
+            </div>
+            <input id="property-name" nbInput placeholder="Field name" required appNameValidator
+                   (change)="updateProperty()"
+                   [(ngModel)]="propertyModel.name" #name="ngModel">
+            <div *ngIf="propertyModel.name && name.invalid && (name.dirty || name.touched)" class="alert alert-danger ">
+              <div *ngIf="name.errors.nameValidator">
+                invalid character in name
+              </div>
+            </div>
           </div>
-          <div class="normal" *ngIf="propertyModel.type!==typeEnum.object">
-            <label class="label" for="property-name">Property Name</label>
+          <div class="normal" *ngIf="!propertyModel.name">
+            <label class="label" for="property-name">Select from saved</label>
+            <nb-select placeholder="Select existing object" (click)="loadFileNames()">
+              <nb-option *ngFor="let item of filesName" [value]="item" (selectionChange)="loadFile(propertyModel,item)">
+                {{item}}
+              </nb-option>
+            </nb-select>
           </div>
-          <input id="property-name" nbInput placeholder="Field name" required appNameValidator
-                 (change)="updateProperty()"
-                 [(ngModel)]="propertyModel.name" #name="ngModel">
-          <div *ngIf="propertyModel.name && name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
-            <div *ngIf="name.errors.nameValidator">
-              invalid character in name
+
+          <!--    <div *ngIf="propertyModel.type === typeEnum.object">-->
+          <!--      <button nbButton status="basic" (click)="minimise = !minimise">Minimize</button>-->
+          <!--    </div>-->
+
+
+          <div class="show-in-row" *ngIf="propertyModel.name">
+            <div class="normal">
+              <label class="label" for="property-type">Property Type</label>
+
+              <nb-select id="property-type" placeholder="Select Type" [(ngModel)]="propertyModel.type"
+                         (ngModelChange)="generateNewProperty(propertyModel)">
+                <nb-option *ngFor="let item of typeEnum | enumToArray" [value]="item">
+                  {{item}}
+                </nb-option>
+              </nb-select>
+            </div>
+
+            <div class="normal">
+              <label class="label" for="required">Required</label>
+              <nb-select id="required" placeholder="Required">
+                <nb-option *ngFor="let item of requiredEnum | enumToArray" [value]="item"
+                           (selectionChange)="setRequired(item)">
+                  {{item}}
+                </nb-option>
+              </nb-select>
+            </div>
+
+
+            <div class="normal" *ngIf=" propertyModel.type !== getType.object && propertyModel.type !== undefined">
+              <label class="label" for="example">Example</label>
+              <input id="example" type="text" nbInput placeholder="Example" [(ngModel)]="propertyModel.example" required
+                     [appExampleValidator]="propertyModel.type" #example="ngModel" (change)="updateProperty()">
+
+              <div *ngIf="propertyModel.example && example.invalid && (example.dirty || example.touched)"
+                   class="alert alert-danger ">
+                <div *ngIf="example.errors.nameValidator">
+                  invalid character in example
+                </div>
+              </div>
+
+            </div>
+            <div class="normal">
+              <label class="label" for="delete">Delete</label>
+              <button id="delete" nbButton ghost status="danger">
+                <nb-icon icon="trash" (click)="deleteProprietyEmit(propertyModel)"></nb-icon>
+              </button>
             </div>
           </div>
         </div>
-        <div class="normal" *ngIf="!propertyModel.name">
-          <label class="label" for="property-name">Select from saved</label>
-          <nb-select placeholder="Select existing object" (click)="loadFileNames()">
-            <nb-option *ngFor="let item of filesName" [value]="item" (selectionChange)="loadFile(propertyModel,item)">
-              {{item}}
-            </nb-option>
-          </nb-select>
-        </div>
 
-        <!--    <div *ngIf="propertyModel.type === typeEnum.object">-->
-        <!--      <button nbButton status="basic" (click)="minimise = !minimise">Minimize</button>-->
-        <!--    </div>-->
-
-
-        <div class="show-in-row" *ngIf="propertyModel.name">
-          <div class="normal">
-            <label class="label" for="property-type">Property Type</label>
-
-            <nb-select id="property-type" placeholder="Select Type" [(ngModel)]="propertyModel.type"
-                       (ngModelChange)="generateNewProperty(propertyModel)">
-              <nb-option *ngFor="let item of typeEnum | enumToArray" [value]="item">
-                {{item}}
-              </nb-option>
-            </nb-select>
-          </div>
-
-          <div class="normal">
-            <label class="label" for="required">Required</label>
-            <nb-select id="required" placeholder="Required">
-              <nb-option *ngFor="let item of requiredEnum | enumToArray" [value]="item"
-                         (selectionChange)="setRequired(item)">
-                {{item}}
-              </nb-option>
-            </nb-select>
-          </div>
-
-
-          <div class="normal" *ngIf=" propertyModel.type !== getType.object && propertyModel.type !== undefined">
-            <label class="label" for="example">Example</label>
-            <input id="example" type="text" nbInput placeholder="Example" [(ngModel)]="propertyModel.example" required
-                   [appExampleValidator]="propertyModel.type" #example="ngModel" (change)="updateProperty()">
-          </div>
-          <div class="normal">
-            <label class="label" for="delete">Delete</label>
-            <button id="delete" nbButton ghost status="danger">
-              <nb-icon icon="trash" (click)="deleteProprietyEmit(propertyModel)"></nb-icon>
-            </button>
-          </div>
+        <div class="normal"
+             *ngIf="propertyModel.properties !== undefined && propertyModel.properties.length > 0">
+          <app-object-type [property]="propertyModel" (propertyChange)="updateProperty()"
+          ></app-object-type>
         </div>
       </div>
 
-      <div class="normal"
-           *ngIf="propertyModel.properties !== undefined && propertyModel.properties.length > 0">
-        <app-object-type [property]="propertyModel" (propertyChange)="updateProperty()"
-                         [specId]="specId"></app-object-type>
-      </div>
-    </div>
-
-  </nb-card>
+    </nb-card>
+  </div>
 </div>
+<div class="show-in-row">
 
+  <button nbButton status="basic" (click)="minimiseProprieties()">Minimise Proprieties</button>
 
-<button nbButton status="basic" (click)="addProperty(property)">New Property</button>
+  <button nbButton status="basic" (click)="addProperty(property)">New Property</button>
+</div>
