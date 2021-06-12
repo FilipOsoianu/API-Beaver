@@ -4,7 +4,7 @@
     <div class="normal">
       <label class="label" for="method">Method</label>
       <nb-select   id="method" placeholder="Method">
-        <nb-option *ngFor="let item of methodsEnum | enumToArray" [value]="item" (selectionChange)="setMethod(item)">
+        <nb-option *ngFor="let item of methodsEnum | enumToKeysArray" [value]="item" (selectionChange)="setMethod(item)">
           {{item}}
         </nb-option>
       </nb-select>

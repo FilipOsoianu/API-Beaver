@@ -5,19 +5,14 @@
 
         <div class="normal">
           <label class="label" for="resource-type-name">Resource name</label>
-          <input id="resource-type-name" nbInput placeholder="Resource type name" required appNameValidator
+          <input id="resource-type-name" nbInput placeholder="Resource type name" required
                  [(ngModel)]="resourceType.name"
-                 #name="ngModel">
-          <div *ngIf="resourceType.name && name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
-            <div *ngIf="name.errors.nameValidator">
-              invalid character in name
-            </div>
-          </div>
+          >
         </div>
         <div class="normal">
 
           <label class="label" for="resource-type-name">Resource description</label>
-          <input id="resource-type-description" nbInput fullWidth  placeholder="Resource type description" required
+          <input id="resource-type-description" nbInput fullWidth placeholder="Resource type description" required
                  [(ngModel)]="resourceType.description">
         </div>
       </div>

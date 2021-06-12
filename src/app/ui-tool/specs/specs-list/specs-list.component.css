@@ -1,3 +1,20 @@
-.add-button {
-  margin-bottom: 10px;
+
+::ng-deep .edit-button {
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+:host /deep/ ng2-st-tbody-edit-delete {
+  height: 0 !important;
+
+}
+
+:host /deep/ ng2-st-tbody-custom a.ng2-smart-action.ng2-smart-action-custom-custom {
+  text-align: center;
+  font-size: 20px;
+
+}
+
+:host /deep/ ng2-st-tbody-custom a.ng2-smart-action.ng2-smart-action-custom-custom:hover {
+  color: #5dcfe3;
 }

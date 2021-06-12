@@ -4,7 +4,7 @@ import {NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeServi
 import {LayoutService} from '../../../@core/utils';
 import {map, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {NbAuthJWTToken, NbAuthService} from '@nebular/auth';
 
 @Component({
@@ -24,6 +24,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private menuService: NbMenuService,
     private themeService: NbThemeService,
     private layoutService: LayoutService,
+    private route: ActivatedRoute,
     private breakpointService: NbMediaBreakpointsService,
     private authService: NbAuthService,
     private router: Router,
@@ -80,7 +81,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   navigateHome() {
-    this.menuService.navigateHome();
+    this.router.navigate([''], {relativeTo: this.route});
     return false;
   }
 }

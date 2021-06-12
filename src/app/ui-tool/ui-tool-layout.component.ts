@@ -22,7 +22,7 @@ export class UiToolLayoutComponent implements OnInit {
               private iconLibraries: NbIconLibraries,
               private http: HttpClient,
   ) {
-
+    nbMenuService.navigateHome('home');
   }
 
   public ngOnInit(): void {

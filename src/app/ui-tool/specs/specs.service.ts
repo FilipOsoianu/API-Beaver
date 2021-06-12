@@ -22,12 +22,22 @@ export class SpecsService {
     return this.http.get<SpecModel>(environment.api_url + `/users/${userId}/specs${specId}`);
   }
 
-  getSpecs(userId: any): Observable<SpecModel[]> {
+  deleteSpec(userId: any, specId: number): void {
+    this.http.delete(environment.api_url + `/users/${userId}/specs/${specId}`);
+  }
 
+  getSpecs(userId: any): Observable<SpecModel[]> {
     return this.http.get<SpecModel[]>(environment.api_url + `/users/${userId}/specs`);
   }
 
-  updateSpec(userId: any, specId: any, spec: SpecModel): Observable<SpecModel> {
+  downloadZip(userId: any, specId: any): Observable<any> {
+    return this.http.get(environment.api_url + `/users/${userId}/specs/${specId}/zipContent`, {
+      responseType: 'arraybuffer'
+    });
+  }
+
+
+  updateSpec(userId: any, specId: any, spec): Observable<SpecModel> {
 
     return this.http.put<SpecModel>(environment.api_url + `/users/${userId}/specs/${specId}`, spec);
   }

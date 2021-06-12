@@ -101,8 +101,8 @@ export class TraitsGeneratorComponent implements OnInit {
       body[this.bodyType] = this.trait.body;
       this.trait.body = body;
     }
-    const file = new File([stringify(parse(JSON.stringify(this.trait.toJSON())))], 'trait-' + this.trait.name + 'raml');
-    saveAs(file, 'trait-' + this.trait.name + 'raml');
+    const file = new File([stringify(parse(JSON.stringify(this.trait.toJSON())))], 'trait-' + this.trait.name + '.raml');
+    saveAs(file, 'trait-' + this.trait.name + '.raml');
 
     this.traitsGeneratorService.saveObject(localStorage.getItem('user_id'), this.specId, file).subscribe(value1 => {
       console.log(value1);

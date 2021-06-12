@@ -14,28 +14,31 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class SpecsListComponent implements OnInit {
 
-
   settings = {
     hideSubHeader: true,
+    mode: 'inline',
+    edit: {editButtonContent: '<div class="edit-button">Edit </div>', confirmSave: true},
+
     actions: {
-      add: false,
-      edit: false,
-      delete: false,
       position: 'right',
+      custom: [
+        {
+          name: 'download',
+          title: '<div class="edit-button">Download</div>'
+        }
+      ],
+      add: false,
+      delete: false
     },
     columns: {
-      id: {
-        title: 'ID',
-        filter: false
-      },
       name: {
         title: 'Name',
         filter: false
       },
-      username: {
-        title: 'File #',
+      isPublic: {
+        title: 'Is public',
         filter: false
-      },
+      }
     }
   };
   data: SpecModel[] = [];
@@ -51,25 +54,49 @@ export class SpecsListComponent implements OnInit {
     this.specsService.getSpecs(this.userId).toPromise().then((data) => {
       this.source.load(data);
     });
-
-
   }
 
   ngOnInit(): void {
   }
 
+  download(event) {
+    if (event.action === 'download') {
+      this.specsService.downloadZip(this.userId, event.data.id).subscribe(value => {
+        const blob = new Blob([value], {
+          type: 'application/zip'
+        });
+        const url = window.URL.createObjectURL(blob);
+        window.open(url);
+      });
+    }
+  }
 
   openSpec(event) {
     this.router.navigate([event.data.id], {relativeTo: this.route});
     console.log(event)
   }
 
+  edit(event) {
+    const newSpec = {name: event.newData.name, isPublic: event.newData.isPublic};
+    this.specsService.updateSpec(this.userId, event.data.id, newSpec).subscribe(value => {
+      console.log(value);
+    });
+    setTimeout(() => {
+      this.source.refresh();
+      this.specsService.getSpecs(this.userId).toPromise().then((data) => {
+        this.source.load(data);
+      });
+    }, 2000);
+  }
+
   addSpec(): void {
     this.dialogService.open(AddSpecComponent)
       .onClose.subscribe(value => {
-      this.specsService.createSpec(this.userId, new SpecModel(value)).subscribe(value1 => {
-        console.log(value1);
-      });
+      if (value) {
+        this.specsService.createSpec(this.userId, new SpecModel(value)).subscribe(value1 => {
+          console.log(value1);
+        });
+      }
     });
   }
 

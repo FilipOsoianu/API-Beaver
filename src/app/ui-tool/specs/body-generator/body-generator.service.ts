@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {PropertiesModel} from "../../models/properties.model";
 import {NbAuthJWTToken, NbAuthService} from "@nebular/auth";
 import {environment} from "../../../../environments/environment";
+import {query} from "@angular/animations";
 
 @Injectable({providedIn: 'root'})
 export class BodyGeneratorService {
@@ -45,7 +46,7 @@ export class BodyGeneratorService {
 
   loadFilesList(userId: any, specId: any): Observable<string []> {
 
-    return this.http.get<string []>(environment.api_url + `/users/${userId}/specs/${specId}/files`);
+    return this.http.get<string []>(environment.api_url + `/users/${userId}/specs/${specId}/files`, {params: {fileType: 'type'}});
   }
 }
 

@@ -13,7 +13,7 @@ export class TraitsGeneratorService {
 
 
   loadFilesList(userId: any, specId: any): Observable<string []> {
-    return this.http.get<string []>(environment.api_url + `/users/${userId}/specs/${specId}/files`);
+    return this.http.get<string []>(environment.api_url + `/users/${userId}/specs/${specId}/files`,{params: {fileType: 'trait'}});
   }
 
 

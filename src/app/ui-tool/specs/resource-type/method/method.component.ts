@@ -36,8 +36,8 @@ export class MethodComponent implements OnInit {
     return TypeEnum;
   }
 
-  setMethod(method: MethodEnum): void {
-    this.resourceTypeMethodModel.method = method;
+  setMethod(method): void {
+    this.resourceTypeMethodModel.method = MethodEnum[method];
     this.updateResourceType();
   }
 

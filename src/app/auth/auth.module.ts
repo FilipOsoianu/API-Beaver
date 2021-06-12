@@ -46,7 +46,7 @@ import {HTTP_INTERCEPTORS} from "@angular/common/http";
             endpoint: '/users/signin',
             method: 'post',
             redirect: {
-              success: '/',
+              success: '/tool',
               failure: '/auth/login',
             },
             defaultErrors: ['Login/Email combination is not correct, please try again.'],
@@ -68,7 +68,7 @@ import {HTTP_INTERCEPTORS} from "@angular/common/http";
               endpoint: '/users',
               method: 'patch',
               redirect: {
-                success: '/',
+                success: '/tool',
                 failure: '/auth/changePassword',
               },
               defaultErrors: ['please try again.'],
@@ -127,6 +127,8 @@ import {HTTP_INTERCEPTORS} from "@angular/common/http";
         } else if (req.url === `${environment.api_url}/users`) {
           return true;
         } else if (req.url === `${environment.api_url}/refresh-token`) {
+          return true;
+        } else if (req.url === `${environment.api_url}/specs`) {
           return true;
         }
         return false;
