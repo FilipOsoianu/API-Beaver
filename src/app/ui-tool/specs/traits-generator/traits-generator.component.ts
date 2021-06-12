@@ -9,6 +9,7 @@ import {TraitsGeneratorService} from "./traits-generator.service";
 import {ActivatedRoute} from "@angular/router";
 import {saveAs} from 'file-saver';
 import {PropertiesModel} from "../../models/properties.model";
+import {BodyTraitTypeEnum} from "../../enums/body-trait-type.enum";
 
 @Component({
   selector: 'ngx-traits-generator',
@@ -25,6 +26,8 @@ export class TraitsGeneratorComponent implements OnInit {
   trait: TraitsModel = new TraitsModel();
   requiredEnum = RequiredEnum;
   statusCode = STATUS_CODES;
+  traitBodyType = BodyTraitTypeEnum;
+  bodyType = BodyTraitTypeEnum.type;
   filesName: any;
 
   ngOnInit(): void {
@@ -58,6 +61,10 @@ export class TraitsGeneratorComponent implements OnInit {
     console.log(this.trait.statusCode);
   }
 
+  setBodyType(type: any): void {
+    this.bodyType = BodyTraitTypeEnum[type];
+  }
+
 
   addQueryParams(): void {
     if (this.trait.queryParams) {
@@ -89,8 +96,13 @@ export class TraitsGeneratorComponent implements OnInit {
   }
 
   save(): void {
-    const file = new File([stringify(parse(JSON.stringify(this.trait.toJSON())))], this.trait.name + 'Trait.raml');
-    saveAs(file, this.trait.name + 'Trait.raml');
+    const body = {};
+    if (this.trait.body) {
+      body[this.bodyType] = this.trait.body;
+      this.trait.body = body;
+    }
+    const file = new File([stringify(parse(JSON.stringify(this.trait.toJSON())))], 'trait-' + this.trait.name + 'raml');
+    saveAs(file, 'trait-' + this.trait.name + 'raml');
 
     this.traitsGeneratorService.saveObject(localStorage.getItem('user_id'), this.specId, file).subscribe(value1 => {
       console.log(value1);

@@ -43,7 +43,7 @@ export class SpecsListComponent implements OnInit {
   source: LocalDataSource;
   userId: any;
 
-  constructor(private specsService: SpecsService, private dialogService: NbDialogService, private router: Router,         private route: ActivatedRoute,
+  constructor(private specsService: SpecsService, private dialogService: NbDialogService, private router: Router, private route: ActivatedRoute,
   ) {
     this.userId = localStorage.getItem('user_id');
     this.source = new LocalDataSource();

@@ -1,21 +1,25 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SchemaModel} from "../../models/schema.model";
-import {SchemaService} from "./schema.service";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {TypeEnum} from "../../../enums/type.enum";
+import {RequiredEnum} from "../../../enums/required.enum";
+import {HeaderModel} from "../../../models/header.model";
+import {SchemaService} from "../schema.service";
 import {ActivatedRoute} from "@angular/router";
+import {SchemaModel} from "../../../models/schema.model";
 
 @Component({
-  selector: 'ngx-schema',
-  templateUrl: './schema.component.html',
-  styleUrls: ['./schema.component.css']
+  selector: 'schema-object',
+  templateUrl: './schema-object.component.html',
+  styleUrls: ['./schema-object.component.scss']
 })
-export class SchemaComponent implements OnInit {
+export class SchemaObjectComponent implements OnInit {
+
   @Input() specId: any;
+  @Input() schema: SchemaModel;
 
   constructor(private schemaService: SchemaService, private activatedRoute: ActivatedRoute) {
     this.specId = this.activatedRoute.snapshot.paramMap.get('id');
   }
 
-  schema: SchemaModel = new SchemaModel();
   filesName
 
   ngOnInit(): void {
@@ -36,5 +40,4 @@ export class SchemaComponent implements OnInit {
   addChildPath() {
     this.schema.children.push(new SchemaModel());
   }
-
 }

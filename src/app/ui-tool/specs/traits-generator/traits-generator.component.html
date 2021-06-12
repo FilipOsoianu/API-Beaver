@@ -33,7 +33,7 @@
       <div class="normal" *ngIf="!trait.name">
         <label class="label" for="trait-name">Select from saved</label>
         <nb-select placeholder="Select existing object" (click)="loadFileNames()">
-          <nb-option *ngFor="let item of filesName" [value]="item" (selectionChange)="loadFile(object,item)">
+          <nb-option *ngFor="let item of filesName" [value]="item" >
             {{item}}
           </nb-option>
         </nb-select>
@@ -69,14 +69,23 @@
       <button nbButton status="basic" (click)="addQueryParams()">Add Query Params</button>
     </div>
   </div>
+  <div class="show-in-row">
+    <div class="normal">
 
-
-  <label class="label" for="body">Body</label>
-  <nb-select class="params-card" id="body" placeholder="Select existing object" (click)="loadFileNames()">
-    <nb-option *ngFor="let item of filesName" [value]="item" (selectionChange)="selectFile(item)">
-      {{item}}
-    </nb-option>
-  </nb-select>
+      <label class="label" for="example-type"> Body type</label>
+      <nb-select id="example-type" placeholder="Type">
+        <nb-option *ngFor="let item of traitBodyType | enumToKeysArray" [value]="item"
+                   (selectionChange)="setBodyType(item)">
+          {{item}}
+        </nb-option>
+      </nb-select>
+    </div>
+    <div class="normal">
+      <label class="label">Body</label>
+      <input nbInput [placeholder]=bodyType required appNameValidator [(ngModel)]="trait.body"
+             #name="ngModel">
+    </div>
+  </div>
 
   <button nbButton status="basic" (click)="save()">SAVE</button>
 

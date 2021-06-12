@@ -9,7 +9,7 @@ export class TraitsModel {
   statusCode: number;
   header: HeaderModel[];
   queryParams: QueryParamsModel[];
-  body: PropertiesModel;
+  body: {};
 
 
   toJSON() {
@@ -41,8 +41,8 @@ export class TraitsModel {
     }
     if (this.body) {
       obj['body'] = {
-        type: this.body.name
-      };
+        'application/json': this.body
+      }
     }
 
     if (this.response) {
@@ -56,20 +56,30 @@ export class TraitsModel {
     return finalObj;
   }
 
-  static fromYaml(value) {
+  static
+
+  fromYaml(value) {
     return JSON.stringify(parse(value));
   }
 
-  static getName(value) {
+  static
+
+  getName(value) {
     return Object.keys(value);
   }
 
-  static getValue(value): any {
+  static
+
+  getValue(value)
+    :
+    any {
     return Object.values(value)[0];
   }
 
 
-  static fromJson(jsonString) {
+  static
+
+  fromJson(jsonString) {
     const model = new TraitsModel();
     let json;
     if (JSON.parse(jsonString) != null) {
@@ -82,7 +92,7 @@ export class TraitsModel {
       if (this.getValue(json).headers) {
         model.header = [];
         this.getValue(json).headers.forEach((value) => {
-    model.header.push(HeaderModel.fromJson(value));
+          model.header.push(HeaderModel.fromJson(value));
 
         });
       }

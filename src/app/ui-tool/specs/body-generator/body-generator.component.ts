@@ -34,8 +34,8 @@ export class BodyGeneratorComponent implements OnInit {
 
         const object = '#%RAML 1.0 DataType \n' + stringify(parse(JSON.stringify(value.toJSON())));
 
-        const file = new File([object], value.name + '.raml');
-        saveAs(file, value.name + '.raml');
+        const file = new File([object], 'type-' + value.name + '.raml');
+        saveAs(file, 'type-' + value.name + '.raml');
 
         this.bodyGeneratorService.saveObject(localStorage.getItem('user_id'), this.specId, file).subscribe(value1 => {
           console.log(value1);
@@ -48,8 +48,8 @@ export class BodyGeneratorComponent implements OnInit {
         const object = {};
         object[value.name] = value.toExample();
         const example = '#%RAML 1.0 NamedExample \n' + stringify(parse(JSON.stringify(object)));
-        const file = new File([example], value.name + 'Example.raml');
-        saveAs(file, value.name + 'Example.raml');
+        const file = new File([example], 'example-' + value.name + '.raml');
+        saveAs(file, 'example-' + value.name + '.raml');
 
         this.bodyGeneratorService.saveObject(localStorage.getItem('user_id'), this.specId, file).subscribe(value1 => {
           console.log(value1);

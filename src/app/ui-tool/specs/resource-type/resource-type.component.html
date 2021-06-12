@@ -1,47 +1,36 @@
 <nb-card class="general-card" accent="primary">
   <div class="show-in-row">
-
     <div class="normal">
-      <label class="label" for="resource-type-name">Resource name</label>
-      <input id="resource-type-name" nbInput placeholder="Trait name" required appNameValidator
-             [(ngModel)]="resourceType.name"
-             #name="ngModel">
-      <div *ngIf="resourceType.name && name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
-        <div *ngIf="name.errors.nameValidator">
-          invalid character in name
+      <div class="show-in-row">
+
+        <div class="normal">
+          <label class="label" for="resource-type-name">Resource name</label>
+          <input id="resource-type-name" nbInput placeholder="Resource type name" required appNameValidator
+                 [(ngModel)]="resourceType.name"
+                 #name="ngModel">
+          <div *ngIf="resourceType.name && name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+            <div *ngIf="name.errors.nameValidator">
+              invalid character in name
+            </div>
+          </div>
+        </div>
+        <div class="normal">
+
+          <label class="label" for="resource-type-name">Resource description</label>
+          <input id="resource-type-description" nbInput fullWidth  placeholder="Resource type description" required
+                 [(ngModel)]="resourceType.description">
         </div>
       </div>
-    </div>
-    <div *ngFor="let resourceTypeMethodModel of resourceType.resourceTypeMethodModel">
 
-      <div class="normal">
-        <label class="label" for="method">Method</label>
-        <nb-select id="method" placeholder="Method">
-          <nb-option *ngFor="let item of methodsEnum | enumToArray" [value]="item" (selectionChange)="setMethod(item)">
-            {{item}}
-          </nb-option>
-        </nb-select>
+      <div *ngFor="let resourceTypeMethodModel of resourceType.resourceTypeMethodModel">
+        <resource-type-method [resourceTypeMethodModel]="resourceTypeMethodModel"
+                              (resourceTypeMethodModelChange)="update($event)"></resource-type-method>
       </div>
-
-    </div>
-    <div class="normal">
-      <label class="label" for="resource-type-description">Resource description</label>
-      <textarea nbInput fullWidth id="resource-type-description" placeholder="Trait name"
-                [(ngModel)]="resourceType.description"
-                #name="ngModel"></textarea>
-    </div>
-
-    <div class="normal">
-      <label class="label" for="traits">Traits</label>
-      <nb-select id="traits" placeholder="Traits" [multiple]="true">
-        <nb-option *ngFor="let item of methodsEnum | enumToArray" [value]="item" (selectionChange)="setMethod(item)">
-          {{item}}
-        </nb-option>
-      </nb-select>
     </div>
   </div>
-  <button nbButton status="basic" (click)="save()">Save</button>
 
-  <button nbButton status="basic" (click)="newResourceType()">New property</button>
+
+  <button nbButton status="basic" (click)="newResourceType()">Add</button>
+  <button nbButton status="basic" (click)="save()">Save</button>
 
 </nb-card>

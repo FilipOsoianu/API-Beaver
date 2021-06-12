@@ -1,0 +1,28 @@
+<nb-card class="general-card" accent="primary">
+  <div class="normal">
+    <label class="label" for="path-name">path name</label>
+    <input id="path-name" nbInput placeholder="PathName name" required appNameValidator
+           [(ngModel)]="schema.path"
+           #name="ngModel">
+    <div *ngIf="schema.path && name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+      <div *ngIf="name.errors.nameValidator">
+        invalid character in name
+      </div>
+    </div>
+  </div>
+
+  <div class="normal">
+    <label class="label" for="select-trait">Select resource type</label>
+    <nb-select multiple id="select-trait" placeholder="Select existing object" (click)="loadFileNames()">
+      <nb-option *ngFor="let item of filesName" [value]="item" (selectionChange)="setResourceType(item)">
+        {{item}}
+      </nb-option>
+    </nb-select>
+  </div>
+  <div *ngIf="schema.children && schema.children.length > 0">
+    <div *ngFor="let schemaModel of schema.children">
+      <schema-object [schema]="schemaModel"></schema-object>
+    </div>
+  </div>
+  <button nbButton status="basic" (click)="addChildPath()">Add childPath</button>
+</nb-card>

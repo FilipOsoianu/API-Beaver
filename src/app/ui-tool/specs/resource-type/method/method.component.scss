@@ -1,0 +1,23 @@
+.body-generator-card {
+    width: max-content;
+    margin: 20px;
+    flex-flow: row wrap;
+}
+
+.display-inline {
+    display: inline-block;
+}
+
+.normal {
+  display: grid;
+}
+
+.nb-theme-default .nb-card {
+    background-color: red;
+}
+.show-in-row{
+  margin-top: 10px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}

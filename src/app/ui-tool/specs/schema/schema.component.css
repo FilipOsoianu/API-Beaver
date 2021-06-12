@@ -1,0 +1,8 @@
+.normal{
+  display: grid;
+}
+.general-card {
+  gap: 10px;
+  display: grid;
+  padding: 10px;
+}

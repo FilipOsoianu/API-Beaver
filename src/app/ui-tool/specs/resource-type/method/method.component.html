@@ -1,0 +1,32 @@
+<nb-card class="card-margin" [accent]="resourceTypeMethodModel.method === methodsEnum.get ? 'info' :resourceTypeMethodModel.method  === methodsEnum.post? 'success':
+         resourceTypeMethodModel.method  === methodsEnum.put?'warning':resourceTypeMethodModel.method  === methodsEnum.delete?'danger':'control'">
+  <div class="show-in-row">
+    <div class="normal">
+      <label class="label" for="method">Method</label>
+      <nb-select   id="method" placeholder="Method">
+        <nb-option *ngFor="let item of methodsEnum | enumToArray" [value]="item" (selectionChange)="setMethod(item)">
+          {{item}}
+        </nb-option>
+      </nb-select>
+    </div>
+
+    <div class="normal">
+      <label class="label" for="resource-type-description">Description</label>
+      <input id="resource-type-description" nbInput placeholder="description" required appNameValidator
+             [(ngModel)]="resourceTypeMethodModel.description"
+             #name="ngModel">
+    </div>
+
+    <div class="normal">
+      <label class="label" for="select-trait">Select trait</label>
+      <nb-select multiple id="select-trait" placeholder="Select existing object" (click)="loadFileNames()">
+        <nb-option *ngFor="let item of filesName" [value]="item" (selectionChange)="setTrait(item)">
+          {{item}}
+        </nb-option>
+      </nb-select>
+    </div>
+
+  </div>
+
+</nb-card>
+

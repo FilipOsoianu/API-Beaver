@@ -6,12 +6,16 @@ import {Ng2SmartTableModule} from "ng2-smart-table";
 import {SchemaRoutingModule} from "./schema-routing.module";
 import {ThemeModule} from "../../../@theme/theme.module";
 import {SchemaComponent} from "./schema.component";
+import {FormsModule} from "@angular/forms";
+import {SharedModule} from "../../shared/shared.module";
+import {SchemaObjectComponent} from "./schema-object/schema-object.component";
 
 
 
 @NgModule({
   declarations: [
-    SchemaComponent
+    SchemaComponent,
+    SchemaObjectComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +23,9 @@ import {SchemaComponent} from "./schema.component";
     ThemeModule,
     Ng2SmartTableModule,
     SchemaRoutingModule,
-    NbTabsetModule
+    NbTabsetModule,
+    FormsModule,
+    SharedModule
   ],
   providers: [],
   exports: [

@@ -17,11 +17,13 @@ import {SharedModule} from "../../shared/shared.module";
 import {FormsModule} from "@angular/forms";
 import {ComponentsPanelModule} from "../../others/components-panel/components-panel.module";
 import {HttpClientModule} from "@angular/common/http";
+import {MethodComponent} from "./method/method.component";
 
 
 @NgModule({
   declarations: [
-    ResourceTypeComponent
+    ResourceTypeComponent,
+    MethodComponent
   ],
   imports: [
     NbCardModule,

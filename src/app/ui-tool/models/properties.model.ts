@@ -69,6 +69,7 @@ export class PropertiesModel {
       if (value.type.includes('!include')) {
         prop.type = TypeEnum.object;
         prop.loadFile = true;
+        prop.required = value.required;
       } else {
         prop.type = value.type;
       }
@@ -77,11 +78,11 @@ export class PropertiesModel {
         prop.properties = [];
         if (value.properties != null) {
           value.properties.forEach(property => {
-            let tempProperty = this.fromJson(this.toString(property),specId, bodyGeneratorService);
+            let tempProperty = this.fromJson(this.toString(property), specId, bodyGeneratorService);
             if (tempProperty.loadFile) {
-              bodyGeneratorService.downloadObject(localStorage.getItem('user_id'), prop.specId, tempProperty.name + '.raml').subscribe(value1 => {
+              bodyGeneratorService.downloadObject(localStorage.getItem('user_id'), prop.specId, 'type-' + tempProperty.name + '.raml').subscribe(value1 => {
                 value1.text().then(value2 => {
-                  tempProperty = PropertiesModel.fromJson(PropertiesModel.fromYaml(value2),specId, bodyGeneratorService);
+                  tempProperty = PropertiesModel.fromJson(PropertiesModel.fromYaml(value2), specId, bodyGeneratorService);
                   prop.properties.push(tempProperty);
                 });
               });

@@ -1,4 +1,4 @@
 export enum RequiredEnum {
-  true = 'True',
-  false = 'False'
+  true = 'true',
+  false = 'false'
 }
